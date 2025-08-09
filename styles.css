@@ -131,6 +131,16 @@ body {
   color: var(--muted);
   margin: 0 0 24px;
 }
+
+#typeTarget {
+  border-right: 2px solid currentColor;
+  white-space: nowrap;
+}
+
+/* προαιρετικό blinking caret αν δεν θες JS για το caret */
+@keyframes caretBlink { 50% { border-color: transparent; } }
+#typeTarget { animation: caretBlink 600ms steps(1) infinite; }
+
 .accent {
   background: linear-gradient(90deg, var(--accent), var(--accent-2));
   -webkit-background-clip: text;
@@ -230,34 +240,66 @@ body {
 .link:hover { text-decoration: underline; }
 
 /* Contact */
+/* Contact */
 .contact-form {
   display: grid;
-  gap: 12px;
+  gap: clamp(14px, 1.2vw, 20px);
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 16px;
-  padding: 18px;
+  padding: clamp(18px, 2vw + 10px, 28px);
+  max-width: 760px;            /* κεντραρισμένο container για desktop */
+  margin: 0 auto;
+  -webkit-tap-highlight-color: transparent;
 }
+
 .form-row {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(12px, 1.2vw, 20px);
 }
-@media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
-label { display: grid; gap: 6px; font-weight: 600; }
-input, textarea {
+
+/* Stack σε mobile */
+@media (max-width: 768px) {
+  .form-row { grid-template-columns: 1fr; }
+}
+
+label {
+  display: grid;
+  gap: 6px;
+  font-weight: 600;
+  font-size: clamp(0.95rem, 0.4vw + 0.9rem, 1.05rem);
+}
+
+input,
+textarea {
   width: 100%;
-  padding: 12px 12px;
   color: var(--text);
   background: #0c121b;
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 14px;
   outline: none;
-  transition: border-color .2s ease, box-shadow .2s ease;
+  transition: border-color .2s ease, box-shadow .2s ease, background-color .2s ease;
+  font-size: clamp(1rem, 0.5vw + 0.95rem, 1.125rem);     /* >=16px για αποφυγή zoom σε iOS */
+  line-height: 1.5;
+  padding: clamp(12px, 0.8vw + 8px, 16px) clamp(12px, 0.8vw + 8px, 16px);
+  min-height: clamp(48px, 4.5vw, 56px);                  /* άνετο tap target */
 }
-input:focus, textarea:focus {
+
+textarea {
+  min-height: clamp(140px, 20vw, 220px);
+  resize: vertical;
+}
+
+input:focus,
+textarea:focus {
   border-color: rgba(122,162,247,0.5);
   box-shadow: 0 0 0 4px rgba(122,162,247,0.15);
+}
+
+/* Λίγο πιο φαρδύ σε πολύ μεγάλα screens */
+@media (min-width: 1200px) {
+  .contact-form { max-width: 880px; }
 }
 
 /* Footer */
@@ -315,3 +357,42 @@ input:focus, textarea:focus {
   background-repeat: no-repeat;
   height: 200px; /* αν θες λίγο πιο ψηλή */
 }
+
+
+
+
+
+
+
+
+
+
+.socials2 {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.social2 {
+  display: inline-flex;
+  width: 28px;
+  height: 28px;
+  color: #222;            /* αλλάζει και το fill μέσω currentColor */
+  transition: transform 0.15s ease, color 0.15s ease, opacity 0.15s ease;
+}
+
+.social2 svg {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;     /* τα SVG paths παίρνουν το color του .social */
+}
+
+.social2:hover {
+  transform: translateY(-1px);
+  opacity: 0.9;
+}
+
+/* Προαιρετικά brand colors σε hover */
+.social2.github:hover { color: #000; }
+.social2.linkedin { color: #0A66C2; }
+.social2.instagram { color: #E1306C; }
