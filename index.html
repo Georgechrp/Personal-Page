@@ -47,6 +47,18 @@
         <li><a href="#about">About</a></li>
         <li><a href="#work">Projects</a></li>
         <li><a href="#contact">Contact</a></li>
+        <li>
+          <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" aria-pressed="false" title="Toggle theme">
+            <!-- Sun -->
+            <svg class="icon sun" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6.76 4.84l-1.8-1.79L3.17 4.84l1.79 1.79 1.8-1.79zm10.48 0l1.8-1.79 1.79 1.79-1.79 1.79-1.8-1.79zM12 2h0c.55 0 1 .45 1 1v2a1 1 0 1 1-2 0V3c0-.55.45-1 1-1zm0 17a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm8-6h2a1 1 0 1 1 0 2h-2a1 1 0 1 1 0-2zM2 13a1 1 0 1 1 0-2h2a1 1 0 1 1 0 2H2zm14.45 6.76l1.8 1.79 1.79-1.79-1.79-1.79-1.8 1.79zM4.96 18.97l-1.79 1.79 1.79 1.79 1.79-1.79-1.79-1.79zM12 19a1 1 0 0 1 1 1v2a1 1 0 1 1-2 0v-2a1 1 0 0 1 1-1z"/>
+            </svg>
+            <!-- Moon -->
+            <svg class="icon moon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+          </button>
+      </li>
       </ul>
     </nav>
   </header>
@@ -151,13 +163,13 @@
 
         <section class="section contact" id="contact">
             <div class="container">
-                <h2>Επικοινωνία</h2>
+                <h2 style="max-width: min(100%, 960px);margin: 0 auto clamp(12px, 1.5vw, 24px);">Contact</h2>
                 
 
                 <form class="contact-form" action="https://formspree.io/f/mkgzkjjr" method="POST">
                 <div class="form-row">
                     <label>
-                    Όνομα
+                    Name
                     <input type="text" name="name" placeholder="Name" required />
                     </label>
                     <label>
@@ -167,7 +179,7 @@
                 </div>
 
                 <label>
-                    Μήνυμα
+                    Message
                     <textarea name="message" rows="5" placeholder="Write your Message..." required></textarea>
                 </label>
 
@@ -178,7 +190,7 @@
                     <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" />
                 </label>
 
-                <button type="submit" class="btn primary" cursor="hand">Αποστολή</button>
+                <button type="submit" class="btn primary" cursor="hand">Send</button>
                 </form>
             </div>
     </section>
@@ -200,5 +212,6 @@
 
   <script src="script.js"></script>
   <script src="type.js"></script>
+  <script src="mode.js"></script>
 </body>
 </html>
