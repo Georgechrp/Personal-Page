@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>George Christopoulos</title>
+  <meta name="description" content="Minimal, modern προσωπικό website με animations." />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <canvas id="bg-canvas" aria-hidden="true"></canvas>
+
+  <header class="site-header">
+    <a href="#" class="logo">Christopoulos George</a>
+    <nav class="nav">
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#work">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-inner">
+        <h1 class="hero-title">Hey👋! <br />I am <span class="accent">George </span></h1>
+        <p class="hero-subtitle">I am a Computer Science graduate who enjoys building Android apps.</p>
+        <div class="cta">
+          <a href="#work" class="btn primary">Check My Projects</a>
+          <a href="#contact" class="btn ghost">Contact with me</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="container">
+        <h2>About</h2>
+        <p>
+          I am a Computer Science graduate who enjoys building Android apps.
+        </p>
+        <div class="features">
+          <div class="feature">
+            <h3>Responsive</h3>
+            <p>Προσαρμοσμένο για κινητά, tablet και desktop με fluid grid και flex layouts.</p>
+          </div>
+          <div class="feature">
+            <h3>Minimal</h3>
+            <p>Καθαρή τυπογραφία, άνετα κενά, και εστίαση στο περιεχόμενο.</p>
+          </div>
+          <div class="feature">
+            <h3>Modern</h3>
+            <p>CSS variables, prefers-reduced-motion, και ελαφρύ JS για animations.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="work">
+      <div class="container">
+        <h2>Projects</h2>
+        <div class="grid">
+          <article class="card" data-project="chordio">
+            <div class="card-media"></div>
+            <div class="card-body">
+              <h3>Chordio</h3>
+              <p>Android app for music players</p>
+              <div class="card-actions">
+                <a href="https://georgioschristopoulos.info/assets/mythesis/index.html"  target="_blank" class="link">Presentation</a>
+                <a href="https://github.com/Georgechrp/Chordio-Android-App" target="_blank" class="link">Code</a>
+              </div>
+            </div>
+          </article>
+          <article class="card" data-project="pokemonexplorer">
+            <div class="card-media"></div>
+            <div class="card-body">
+              <h3>Pokemon Explorer</h3>
+              <p>Kotlin, Jetpack Compose</p>
+              <div class="card-actions">
+                <a href="#" target="_blank" class="link">Presentation</a>
+                <a href="https://github.com/Georgechrp/PokemonExplorer" target="_blank" class="link">Code</a>
+              </div>
+            </div>
+          </article>
+          <article class="card" data-project="salesflow">
+            <div class="card-media"></div>
+            <div class="card-body">
+              <h3></h3>
+              <p>Μικρή περιγραφή για το project. Τεχνολογίες: Design, Motion.</p>
+              <div class="card-actions">
+                <a href="#" target="_blank" class="link">Presentation</a>
+                <a href="https://github.com/Georgechrp/MobileAccountManagement1-2024" target="_blank" class="link">Code</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+        <section class="section contact" id="contact">
+            <div class="container">
+                <h2>Επικοινωνία</h2>
+                <p>Ανοικτός/ή για συνεργασίες και projects. Στείλε μου μήνυμα!</p>
+
+                <form class="contact-form" action="https://formspree.io/f/mkgzkjjr" method="POST">
+                <div class="form-row">
+                    <label>
+                    Όνομα
+                    <input type="text" name="name" placeholder="Name" required />
+                    </label>
+                    <label>
+                    Email
+                    <input type="email" name="email" placeholder="E-mail" required />
+                    </label>
+                </div>
+
+                <label>
+                    Μήνυμα
+                    <textarea name="message" rows="5" placeholder="Write your Message..." required></textarea>
+                </label>
+
+                <input type="hidden" name="_subject" value="Νέο μήνυμα από τη φόρμα επικοινωνίας" />
+
+                <label class="visually-hidden" style="position:absolute; left:-10000px;">
+                    Μην συμπληρώσεις αυτό το πεδίο
+                    <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" />
+                </label>
+
+                <button type="submit" class="btn primary" cursor="hand">Αποστολή</button>
+                </form>
+            </div>
+    </section>
+  </main>
+
+
+
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> Personal Page | George Christopoulos</p>
+      <div class="socials">
+        <a href="https://github.com/Georgechrp"  target="_blank" aria-label="GitHub" class="social">GitHub</a>
+        <a href="https://www.linkedin.com/in/georgechrp/" target="_blank" aria-label="LinkedIn" class="social">LinkedIn</a>
+        <a href="https://www.instagram.com/georgechrp/" target="_blank" aria-label="Instagram" class="social">Instagram</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
