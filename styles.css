@@ -28,8 +28,8 @@ body {
   width: 100vw;
   height: 100vh;
   z-index: -1;
-  filter: blur(20px) saturate(120%);
-  opacity: 0.5;
+  filter: blur(12px) saturate(110%);
+  opacity: 0.28;
   pointer-events: none;
 }
 
