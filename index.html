@@ -99,6 +99,38 @@
       <path fill="currentColor" d="M120 0C53.73 0 0 53.73 0 120s53.73 120 120 120 120-53.73 120-120S186.27 0 120 0zm56.6 81.6l-23.2 109.6c-1.8 8.1-6.6 10.1-13.4 6.3l-37-27.3-17.9 17.2c-2 2-3.7 3.7-7.6 3.7l2.7-38.2 69.6-62.8c3-2.7-0.7-4.2-4.6-1.5l-86.1 54.2-37.1-11.6c-8-2.5-8.1-8-1.7-10.6l145.1-55.9c6.7-2.5 12.6 1.5 10.4 10.5z"/>
     </svg>
   </a>
+
+  <!-- CV button (opens modal with embedded PDF) -->
+  <button type="button" class="social2 cv cv-btn" aria-haspopup="dialog" aria-controls="cvModal" aria-label="Άνοιγμα Βιογραφικού (PDF)">
+    <svg viewBox="0 0 24 24" aria-hidden="true" width="28" height="28">
+      <!-- Έντονο περίγραμμα αρχείου -->
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9l-6-7z"
+            fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" />
+      <!-- Κόκκινο “διπλωμένο” corner -->
+      <path d="M15 2 L21 8 L15 8 Z" fill="#e53e3e"/>
+      <!-- Κόκκινες γραμμές που παραπέμπουν σε PDF περιεχόμενο -->
+      <rect x="7" y="12.5" width="10" height="2" rx="1" fill="#e53e3e"/>
+      <rect x="7" y="16.5" width="8" height="2" rx="1" fill="#e53e3e"/>
+    </svg>
+  </button>
+
+    <!-- Modal -->
+    <div id="cvModal" class="cv-modal" role="dialog" aria-modal="true" aria-labelledby="cvTitle" aria-hidden="true">
+      <div class="cv-backdrop" data-close></div>
+      <div class="cv-dialog" role="document">
+        <header class="cv-header">
+          <h2 id="cvTitle">Βιογραφικό (PDF)</h2>
+          <button type="button" class="cv-close" aria-label="Κλείσιμο" title="Κλείσιμο" data-close>&times;</button>
+        </header>
+        <div class="cv-body">
+          <iframe id="cvFrame" src="" title="Ενσωματωμένο Βιογραφικό PDF" loading="lazy"></iframe>
+          <div class="cv-fallback">
+            Δεν εμφανίζεται το PDF;
+            <a id="cvDownload" href="#" target="_blank" rel="noopener">Κατέβασέ το εδώ</a>.
+          </div>
+        </div>
+      </div>
+    </div>
 </div>
       </div>
     </section>
@@ -302,6 +334,6 @@
   <script src="script.js"></script>
   <script src="type.js"></script>
   <script src="mode.js"></script>
-
+  <script src="cv.js"></script>
 </body>
 </html>

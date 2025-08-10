@@ -533,6 +533,7 @@ textarea:focus {
 .social2 svg {
   width: 100%;
   height: 100%;
+  display: block;     /* πρόσθεσέ το */
   fill: currentColor;     /* τα SVG paths παίρνουν το color του .social */
 }
 
@@ -752,4 +753,48 @@ textarea:focus {
 /* ===== Footer glass fix (use theme vars instead of fixed dark rgba) ===== */
 .site-footer {
   background: linear-gradient(to top, var(--glass-start), var(--glass-end));
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* Προαιρετικό hover χρώμα μόνο για το CV icon */
+.social2.cv:hover { color: #e53e3e; cursor: pointer;}
+.social2 svg { display: block; }
+/* Modal */
+.cv-modal[aria-hidden="true"] { display: none; }
+.cv-modal {
+  position: fixed; inset: 0; z-index: 1000;
+  display: grid; place-items: center;
+}
+.cv-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,.5); }
+.cv-dialog {
+  position: relative; width: min(95vw, 980px); height: min(90vh, 720px);
+  background: #0e0f11; color: #e6e6e6; border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.5); border: 1px solid #222;
+  display: flex; flex-direction: column; overflow: hidden;
+}
+.cv-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 16px; background: #13151a; border-bottom: 1px solid #222;
+}
+.cv-close {
+  appearance: none; border: 0; background: transparent; color: #bbb;
+  font-size: 28px; line-height: 1; cursor: pointer; padding: 4px 8px; border-radius: 8px;
+}
+.cv-close:hover { color: #fff; background: #1e2129; }
+.cv-body { position: relative; flex: 1; display: grid; grid-template-rows: 1fr auto; }
+#cvFrame { width: 100%; height: 100%; border: 0; background: #0b0c0f; }
+.cv-fallback { padding: 8px 12px; font-size: 14px; color: #c9c9c9; background: #0b0c0f; border-top: 1px solid #222; }
+
+@media (max-width: 480px) {
+  .cv-dialog { width: 96vw; height: 88vh; }
 }
