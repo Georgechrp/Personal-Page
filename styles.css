@@ -119,7 +119,7 @@ body {
 .hero-inner {
   flex-direction: column;
   align-items: flex-start;
-  margin-top: 50px;
+  margin-top: clamp(24px, 8vh, 80px);
 }
 .hero-title {
   font-size: clamp(32px, 6vw, 56px);
