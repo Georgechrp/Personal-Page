@@ -1,0 +1,233 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f7f9fc;
+  color: #333;
+}
+
+header {
+  text-align: center;
+  background: #2c3e50;
+  color: white;
+  padding: 30px 20px;
+}
+
+.logo {
+  width: 80px;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  font-style: italic;
+  margin-top: 5px;
+}
+
+main {
+  max-width: 960px;
+  margin: 30px auto;
+  padding: 0 20px;
+}
+
+section {
+  margin-bottom: 40px;
+}
+
+h2 {
+  color: #2c3e50;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 5px;
+}
+
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.gallery img {
+  width: calc(33% - 10px);
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+.flow-img {
+  width: 100%;
+  max-width: 800px;
+  display: block;
+  margin: 20px auto;
+  border-radius: 5px;
+}
+
+ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+ul li {
+  background: #ecf0f1;
+  margin: 8px 0;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.btn {
+  display: inline-block;
+  margin: 10px;
+  padding: 12px 20px;
+  background: #2980b9;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.btn:hover {
+  background: #3498db;
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  background: #ecf0f1;
+  font-size: 14px;
+  color: #555;
+}
+
+.feedback-link {
+  font-size: 14px;
+  margin-top: 10px;
+  color: #555;
+}
+.feedback-link a {
+  color: #2980b9;
+  text-decoration: none;
+}
+.feedback-link a:hover {
+  text-decoration: underline;
+}
+
+
+.video-container {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 */
+  height: 0;
+  overflow: hidden;
+  max-width: 100%;
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+
+.swiper {
+  width: 100%;
+  max-width: 280px;  /* Μικρότερο από 400px */
+  height: auto;
+  margin: auto;
+  margin-top: 1rem;
+}
+
+.swiper-slide img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+
+
+.feedback-results {
+  padding: 2rem;
+  background-color: #f9f9f9;
+  border-top: 1px solid #ddd;
+}
+.feedback-results h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+.feedback-results iframe {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+
+.personal-site-section {
+  text-align: center;
+  margin: 40px 0;
+}
+.personal-site-section .btn {
+  padding: 10px 20px;
+  background-color: #0077cc;
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+}
+.personal-site-section .btn:hover {
+  background-color: #005fa3;
+}
+
+
+
+
+/* Sidebar styles */
+.sidebar {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 2000;
+  top: 0;
+  left: 0;
+  background-color: #ffffffee;
+  overflow-x: hidden;
+  transition: 0.3s;
+  padding-top: 60px;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+}
+
+.sidebar a {
+  padding: 10px 20px;
+  text-decoration: none;
+  font-size: 18px;
+  color: #333;
+  display: block;
+  transition: 0.2s;
+}
+
+.sidebar a:hover {
+  background-color: #f0f0f0;
+  color: #0077cc;
+}
+
+/* Hamburger button */
+.hamburger {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  z-index: 3000;
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #333;
+}
+
+/* Optional: hide hamburger when sidebar is open (you can toggle it in JS too) */
+.sidebar.open + .hamburger {
+  display: none;
+}
+
+/* Responsive tip */
+@media (min-width: 768px) {
+  .hamburger {
+    display: block;
+  }
+}
+html {
+  scroll-behavior: smooth;
+}
