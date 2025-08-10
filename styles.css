@@ -765,11 +765,27 @@ textarea:focus {
 
 
 
+/* Κουμπί CV: με ελαφρύ περίγραμμα και σωστό κέντρο */
+.cv-btn {
+  background: transparent;
+  border: 1px solid rgba(229, 62, 62, 0.35); /* απαλό κόκκινο περίγραμμα */
+  padding: 6px; /* μικρό breathing room γύρω από το SVG */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+  border-radius: 10px;
+}
 
-/* Προαιρετικό hover χρώμα μόνο για το CV icon */
-.social2.cv:hover { color: #e53e3e; cursor: pointer;}
+/* Default/hover χρώμα για το icon μέσω currentColor */
+.social2.cv { color: #e53e3e; } /* base κόκκινο */
+.social2.cv:hover { color: #c53030; cursor: pointer; } /* λίγο πιο σκούρο στο hover */
 .social2 svg { display: block; }
-/* Modal */
+
+/* Αν θες πιο μεγάλο/μικρό, άλλαξε αυτά */
+.social2.cv svg { width: 40px; height: 40px; }
+
+/* Modal (όπως το είχες) */
 .cv-modal[aria-hidden="true"] { display: none; }
 .cv-modal {
   position: fixed; inset: 0; z-index: 1000;
