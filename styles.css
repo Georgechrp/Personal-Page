@@ -38,6 +38,7 @@ body {
   position: sticky;
   top: 0;
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   background: linear-gradient(to bottom, rgba(15,22,33,0.85), rgba(15,22,33,0.3));
   border-bottom: 1px solid var(--border);
   z-index: 10;
@@ -119,7 +120,7 @@ body {
 .hero-inner {
   flex-direction: column;
   align-items: flex-start;
-  margin-top: clamp(24px, 8vh, 80px);
+  margin-top: clamp(24px, 8svh, 80px);
 }
 .hero-title {
   font-size: clamp(32px, 6vw, 56px);
@@ -306,35 +307,97 @@ textarea:focus {
   .contact-form { max-width: 880px; }
 }
 
-/* Footer */
+/* Big Footer */
 .site-footer {
+  background: linear-gradient(to top, var(--glass-start), var(--glass-end));
   border-top: 1px solid var(--border);
-  background: linear-gradient(to top, rgba(15,22,33,0.85), rgba(15,22,33,0.35));
-  margin-top: 40px;
+  margin-top: 56px;
 }
-.footer-inner {
-  padding: 20px;
+
+/* Top section */
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1.3fr;
+  gap: 24px;
+  padding: 32px 20px 16px;
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .footer-grid { grid-template-columns: 1fr; padding: 28px 20px 8px; }
+}
+
+.footer-brand h3 {
+  margin: 0 0 8px;
+  font-size: clamp(20px, 2.2vw, 24px);
+}
+.footer-tagline {
+  margin: 0 0 12px;
+  color: var(--muted);
+}
+
+.footer-links, .footer-contact {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
+  gap: 8px;
 }
-.footer-inner p { margin: 0; color: var(--muted); }
-.socials { display: flex; gap: 14px; }
-.social {
+.footer-links h4, .footer-contact h4 {
+  margin: 0 0 4px;
+  font-size: clamp(16px, 1.8vw, 18px);
+}
+.footer-links a {
   color: var(--muted);
   text-decoration: none;
-  border: 1px solid var(--border);
-  padding: 8px 10px;
-  border-radius: 10px;
+  padding: 6px 0;
+  border-radius: 8px;
+  transition: color .2s ease, background-color .2s ease;
 }
-.social:hover { color: var(--text); border-color: rgba(122,162,247,0.4); }
+.footer-links a:hover { color: var(--text); background: var(--hover-veil); }
 
-/* Reduce motion pref */
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  #bg-canvas { display: none; }
-  .btn:hover, .card:hover, .feature:hover { transform: none; }
+/* Reuse socials2 styling; ensure base color and hover */
+.socials2 { margin-top: 10px; }
+.social2 { color: var(--icon); }
+.social2.github:hover { color: #000; }
+.social2.linkedin:hover { color: #0A66C2; }
+.social2.telegram:hover { color: #229ED9; }
+
+/* Bottom bar */
+.footer-bottom {
+  border-top: 1px solid var(--border);
+  margin-top: 16px;
+  background: linear-gradient(to top, var(--glass-start), transparent);
 }
+.footer-bottom-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 20px 20px;
+}
+.footer-bottom p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+@media (max-width: 480px) {
+  .footer-links a { padding: 8px 10px; }
+  .footer-bottom-inner { flex-direction: row; gap: 8px; }
+}
+/* Back-to-top */
+.to-top {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px; height: 40px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  color: var(--text);
+  background: transparent;
+  transition: background .2s ease, transform .08s ease, border-color .2s ease, opacity .2s ease;
+  text-decoration: none;
+}
+.to-top:hover { background: var(--hover-veil); }
+.to-top:active { transform: scale(0.96); }
+.to-top svg { width: 18px; height: 18px; }
 
 
 
@@ -377,8 +440,9 @@ textarea:focus {
   gap: 16px 20px;
   margin-top: 10px;
 }
-@media (max-width: 850px) {
-  #skills .skills-groups { grid-template-columns: 1fr; }
+@media (min-width: 768px) and (max-width: 1024px) {
+  #skills .skills-groups { grid-template-columns: 2fr 2fr; }
+  .grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 .skills-group h3 {
@@ -444,7 +508,7 @@ textarea:focus {
   font-size: 0.8rem;
   text-align: left;
   line-height: 1.2;
-}
+}.nowrap { white-space: nowrap; }
 
 
 
@@ -461,6 +525,9 @@ textarea:focus {
   height: 28px;
   color: var(--icon);           /* αλλάζει και το fill μέσω currentColor */
   transition: transform 0.15s ease, color 0.15s ease, opacity 0.15s ease;
+}@media (max-width: 480px) {
+  .social2 { width: 32px; height: 32px; }
+  .btn { padding: 14px 18px; } /* πιο άνετο πάτημα */
 }
 
 .social2 svg {
