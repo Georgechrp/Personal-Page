@@ -765,17 +765,42 @@ textarea:focus {
 
 
 
-/* Κουμπί CV: με ελαφρύ περίγραμμα και σωστό κέντρο */
+/* CV button — ίδιο styling με τα social εικονίδια */
 .cv-btn {
+  appearance: none;
+  border: 0;
   background: transparent;
-  border: 1px solid rgba(229, 62, 62, 0.35); /* απαλό κόκκινο περίγραμμα */
-  padding: 6px; /* μικρό breathing room γύρω από το SVG */
+  padding: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  line-height: 0;
-  border-radius: 10px;
+  width: 28px;
+  height: 28px;
+  color: var(--icon);
+  cursor: pointer;
+  transition: transform 0.15s ease, color 0.15s ease, opacity 0.15s ease;
 }
+
+@media (max-width: 480px) {
+  .cv-btn { width: 32px; height: 32px; }
+}
+
+/* Το SVG να ακολουθεί το μέγεθος του κουμπιού και το currentColor, όπως τα άλλα icons */
+.cv-btn svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  fill: currentColor;
+}
+
+/* Hover/active συμπεριφορά όπως τα υπόλοιπα social */
+.social2:hover {
+  transform: translateY(-1px);
+  opacity: 0.9;
+}
+
+/* Brand-style hover για το CV (κόκκινο), όπως έχεις για GitHub/LinkedIn/Telegram */
+.social2.cv:hover { color: #e53e3e; }
 
 /* Default/hover χρώμα για το icon μέσω currentColor */
 .social2.cv { color: #e53e3e; } /* base κόκκινο */
@@ -814,3 +839,6 @@ textarea:focus {
 @media (max-width: 480px) {
   .cv-dialog { width: 96vw; height: 88vh; }
 }
+
+
+

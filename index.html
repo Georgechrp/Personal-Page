@@ -101,15 +101,14 @@
   </a>
 
   <!-- CV button (opens modal with embedded PDF) -->
-<button type="button" class="social2 cv cv-btn" aria-haspopup="dialog" aria-controls="cvModal" aria-label="Άνοιγμα Βιογραφικού (PDF)">
-  <svg viewBox="0 0 24 24" aria-hidden="true" width="40" height="40">
-    <!-- Μεγαλύτερο κόκκινο “διπλωμένο” corner -->
-    <path d="M14 1 L23 10 L14 10 Z" fill="currentColor"/>
-    <!-- Πιο παχιές και φαρδιές γραμμές (PDF lines) -->
-    <rect x="5" y="12" width="14" height="3.2" rx="1.6" fill="currentColor"/>
-    <rect x="5" y="17" width="12" height="3.2" rx="1.6" fill="currentColor"/>
-  </svg>
-</button>
+<!-- CV button (opens modal with embedded PDF) -->
+  <button type="button" class="social2 cv cv-btn" aria-haspopup="dialog" aria-controls="cvModal" aria-label="Άνοιγμα Βιογραφικού (PDF)">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M14 1 L23 10 L14 10 Z" fill="currentColor"/>
+      <rect x="5" y="12" width="14" height="3.2" rx="1.6" fill="currentColor"/>
+      <rect x="5" y="17" width="12" height="3.2" rx="1.6" fill="currentColor"/>
+    </svg>
+  </button>
 
     <!-- Modal -->
     <div id="cvModal" class="cv-modal" role="dialog" aria-modal="true" aria-labelledby="cvTitle" aria-hidden="true">
@@ -123,7 +122,7 @@
           <iframe id="cvFrame" src="" title="Ενσωματωμένο Βιογραφικό PDF" loading="lazy"></iframe>
           <div class="cv-fallback">
             Δεν εμφανίζεται το PDF;
-            <a id="cvDownload" href="#" target="_blank" rel="noopener">Κατέβασέ το εδώ</a>.
+            <a id="cvDownload" href="#" target="_blank" rel="noopener">Πατήστε εδώ</a>.
           </div>
         </div>
       </div>
