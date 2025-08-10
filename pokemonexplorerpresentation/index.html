@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pokémon Explorer App — Παρουσίαση</title>
+  <meta name="description" content="Παρουσίαση και προσέγγιση υλοποίησης για το Pokémon Explorer App με χρήση Kotlin και PokéAPI." />
+  <style>
+    :root {
+      --bg: #0f1120;
+      --panel: #16182b;
+      --panel-2: #1c1f35;
+      --text: #e7e7ee;
+      --muted: #a9acc7;
+      --brand: #ffcb05;  /* Pikachu yellow */
+      --brand-2: #386abb; /* Poké blue */
+      --ok: #55d69c;
+      --warn: #ffb86b;
+      --danger: #ff6b6b;
+
+      --chip-bg: #212542;
+      --chip-active: #2a2f57;
+      --card: #181b33;
+
+      --radius: 14px;
+      --radius-sm: 10px;
+      --shadow: 0 10px 30px rgba(0,0,0,0.35);
+      --shadow-soft: 0 6px 18px rgba(0,0,0,0.25);
+    }
+
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: radial-gradient(1200px 800px at 80% -10%, #1a1e3f 0%, #0f1120 45%) no-repeat, var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    header.hero {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 24px;
+      align-items: center;
+      padding: 24px;
+      background: linear-gradient(180deg, rgba(56,106,187,0.18), rgba(56,106,187,0.06)) , var(--panel);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    @media (max-width: 900px) {
+      header.hero { grid-template-columns: 1fr; }
+    }
+    .hero h1 {
+      font-size: clamp(24px, 3.5vw, 38px);
+      line-height: 1.12;
+      margin: 0 0 10px 0;
+      letter-spacing: 0.2px;
+    }
+    .hero p.lead {
+      color: var(--muted);
+      font-size: clamp(14px, 2vw, 17px);
+      margin: 12px 0 18px 0;
+    }
+    .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 8px;
+    }
+    .badge {
+      background: #20365e;
+      color: #e3edff;
+      border: 1px solid #2b4a85;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      letter-spacing: 0.2px;
+    }
+    .hero-card {
+      background: radial-gradient(280px 200px at 20% 0%, rgba(255,203,5,0.18) 0%, rgba(255,203,5,0) 60%), var(--panel-2);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow-soft);
+    }
+    .cta-row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
+    .btn {
+      cursor: pointer;
+      border: none;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-weight: 600;
+      color: #0f1221;
+      background: linear-gradient(180deg, #ffdd58, #ffcb05);
+      box-shadow: 0 10px 20px rgba(255,203,5,0.2), inset 0 -2px 0 rgba(0,0,0,0.15);
+      transition: transform 0.06s ease-in-out, box-shadow 0.12s ease-in-out, filter 0.12s ease-in-out;
+    }
+    .btn:hover { transform: translateY(-1px); filter: brightness(1.02); }
+    .btn:active { transform: translateY(0); }
+    .btn.alt {
+      color: var(--text);
+      background: linear-gradient(180deg, #4c78c7, #386abb);
+      box-shadow: 0 10px 20px rgba(56,106,187,0.25), inset 0 -2px 0 rgba(0,0,0,0.15);
+    }
+
+    section {
+      margin-top: 28px;
+      background: var(--panel);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: var(--shadow-soft);
+    }
+    section h2 {
+      margin: 0 0 14px 0;
+      font-size: 22px;
+    }
+    .grid {
+      display: grid;
+      gap: 16px;
+    }
+    .grid.cols-2 { grid-template-columns: 1.2fr 1fr; }
+    .grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+    @media (max-width: 900px) {
+      .grid.cols-2, .grid.cols-3 { grid-template-columns: 1fr; }
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+    }
+    .muted { color: var(--muted); }
+    .check {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      background: #1e2342;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.06);
+      margin: 6px 6px 0 0;
+      font-size: 14px;
+    }
+    .check i { color: var(--ok); }
+
+    /* Interactive Mock Demo */
+    .demo {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+    .type-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .chip {
+      background: var(--chip-bg);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 8px 12px;
+      border-radius: 999px;
+      cursor: pointer;
+      color: var(--text);
+      font-weight: 600;
+      font-size: 13px;
+      letter-spacing: 0.2px;
+      transition: background 0.12s ease-in-out, transform 0.06s ease-in-out, border-color 0.12s ease-in-out;
+      user-select: none;
+    }
+    .chip:hover { background: #242a52; }
+    .chip.active {
+      background: var(--chip-active);
+      border-color: #3e4684;
+      transform: translateY(-1px);
+    }
+
+    .search-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+    }
+    .search {
+      background: var(--panel-2);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 12px 14px;
+      color: var(--text);
+      outline: none;
+      font-size: 15px;
+    }
+    .small {
+      font-size: 12px;
+      color: var(--muted);
+      margin-left: 2px;
+    }
+
+    .poke-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+    }
+    @media (max-width: 1100px) { .poke-grid { grid-template-columns: repeat(4, 1fr); } }
+    @media (max-width: 900px) { .poke-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 680px) { .poke-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 420px) { .poke-grid { grid-template-columns: 1fr; } }
+
+    .poke-card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0)), var(--panel-2);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px;
+      padding: 12px;
+      display: grid;
+      gap: 8px;
+      box-shadow: var(--shadow-soft);
+      transition: transform 0.08s ease-in-out, border-color 0.12s ease-in-out;
+    }
+    .poke-card:hover { transform: translateY(-2px); border-color: rgba(255,255,255,0.12); }
+    .poke-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .avatar {
+      height: 48px;
+      width: 48px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, rgba(255,203,5,0.35), rgba(56,106,187,0.35));
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      color: #101326;
+    }
+    .poke-name { font-weight: 700; letter-spacing: 0.3px; }
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+    .stat {
+      background: #1c2142;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 10px;
+      padding: 8px;
+      font-size: 12px;
+    }
+    .stat b { display: block; font-size: 13px; }
+    .empty, .error {
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px dashed rgba(255,255,255,0.14);
+      color: var(--muted);
+      background: rgba(255,255,255,0.03);
+    }
+    .load-more {
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+    }
+    .ghost {
+      opacity: 0.6;
+    }
+
+    /* Lists */
+    ul.clean {
+      margin: 8px 0 0 0;
+      padding-left: 16px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    ul.clean li { margin: 4px 0; }
+
+    footer {
+      margin: 28px 0 20px 0;
+      color: var(--muted);
+      text-align: center;
+    }
+    a {
+      color: #dbe6ff;
+      text-decoration: none;
+      border-bottom: 1px dashed rgba(219,230,255,0.45);
+    }
+    a:hover { border-bottom-style: solid; }
+    code.inline {
+      background: #23264a;
+      padding: 2px 6px;
+      border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.08);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.95em;
+      color: #dfe4ff;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="hero">
+      <div>
+        <h1>Pokémon Explorer App</h1>
+        <p class="lead">Εφαρμογή σε Kotlin με PokéAPI που επιτρέπει επιλογή τύπου Pokémon (Fire, Water, Grass, Electric, Dragon, Psychic, Ghost, Dark, Steel, Fairy), αναζήτηση ανά όνομα μέσα στον επιλεγμένο τύπο, προβολή λίστας με σταδιακό φόρτωμα (10-10), και λεπτομέρειες (όνομα, εικόνα, βασικά stats: HP, Attack, Defense).</p>
+        <div class="badges">
+          <span class="badge">Kotlin (Android)</span>
+          <span class="badge">Clean Architecture</span>
+          <span class="badge">Coroutines + Flow</span>
+          <span class="badge">Retrofit + OkHttp</span>
+          <span class="badge">Coil (images)</span>
+          <span class="badge">Pagination</span>
+          <span class="badge">Caching</span>
+          <span class="badge">Unit/UI Tests</span>
+        </div>
+        <div class="cta-row">
+          <button class="btn" onclick="document.getElementById('demo').scrollIntoView({behavior:'smooth'})">Δες το mock demo</button>
+          <button class="btn alt" onclick="document.getElementById('timeline').scrollIntoView({behavior:'smooth'})">Εκτίμηση χρόνου</button>
+          <span class="small">Επικοινωνία: Thanos Zouganelis — zouganelis@thinkdesquared.com</span>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div style="display:flex;align-items:center;gap:10px;justify-content:space-between;">
+          <div>
+            <div style="font-weight:800;font-size:18px;">Στόχοι</div>
+            <div class="muted">Ποιότητα > Ταχύτητα. Καθαρή αρχιτεκτονική, αξιόπιστο pagination και ομαλή εμπειρία χρήστη.</div>
+          </div>
+          <div class="avatar" title="PokéBall">⚡</div>
+        </div>
+        <div style="margin-top:10px;">
+          <span class="check"><i>✔</i> Επιλογή τύπου + Αναζήτηση</span>
+          <span class="check"><i>✔</i> Πρώτα 10 + Load more</span>
+          <span class="check"><i>✔</i> Όνομα, εικόνα, HP/ATK/DEF</span>
+        </div>
+      </div>
+    </header>
+
+    <section id="overview">
+      <h2>Σύνοψη</h2>
+      <div class="grid cols-2">
+        <div class="card">
+          <b>Περιγραφή:</b>
+          <p class="muted">Να υλοποιηθεί mobile app (Kotlin/Android) που καταναλώνει το PokéAPI για 10 προκαθορισμένους τύπους, υποστηρίζει αναζήτηση εντός του τύπου, προβάλει 10-10 αποτελέσματα και προσφέρει βασικές λεπτομέρειες Pokémon.</p>
+          <b>Επικοινωνία/Διαθεσιμότητα:</b>
+          <p class="muted">Ο Thanos αναφέρει OOO 04/08–08/08 και οι @Harry Oikonomidis (Head of Technology) & @Paris Tsiogas (Head of Mobile) είναι διαθέσιμοι για απορίες. Θα ενημερώσω για τον εκτιμώμενο χρόνο ολοκλήρωσης εντός 1 εργάσιμης.</p>
+        </div>
+        <div class="card">
+          <b>Κύρια χαρακτηριστικά:</b>
+          <ul class="clean">
+            <li>Επιλογή τύπου από Fire, Water, Grass, Electric, Dragon, Psychic, Ghost, Dark, Steel, Fairy</li>
+            <li>Αναζήτηση ανά όνομα μέσα στον επιλεγμένο τύπο</li>
+            <li>Λίστα με "Load more" (10-10) από PokéAPI</li>
+            <li>Λεπτομέρειες Pokémon: εικόνα (official artwork), HP, Attack, Defense</li>
+            <li>Κατάσταση φόρτωσης, σφάλματα, κενά αποτελέσματα, retry</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="demo">
+      <h2>Mock Demo (UI Συμπεριφορά χωρίς PokéAPI)</h2>
+      <div class="demo">
+        <div class="type-chips" id="typeChips"></div>
+        <div class="search-row">
+          <input class="search" id="searchInput" placeholder="Αναζήτησε Pokémon ανά όνομα..." />
+          <button class="btn alt" id="clearSearchBtn">Καθαρισμός</button>
+        </div>
+        <div class="small" id="resultsInfo">0 αποτελέσματα</div>
+        <div class="poke-grid" id="pokeGrid"></div>
+        <div class="load-more">
+          <button class="btn" id="loadMoreBtn">Load more</button>
+        </div>
+        <div class="small">Σημείωση: Αυτό είναι demo με mock δεδομένα για παρουσίαση της ροής (επιλογή τύπου, αναζήτηση, pagination).</div>
+      </div>
+    </section>
+
+    <section id="approach">
+      <h2>Προσέγγιση & Αρχιτεκτονική</h2>
+      <div class="grid cols-3">
+        <div class="card">
+          <b>Stack & Βιβλιοθήκες</b>
+          <ul class="clean">
+            <li>Kotlin, AndroidX, Material 3</li>
+            <li>Coroutines + Flow για async</li>
+            <li>Retrofit + OkHttp + Moshi</li>
+            <li>Coil για εικόνες</li>
+            <li>Hilt για DI</li>
+            <li>Jetpack Compose για UI ή XML + RecyclerView (εναλλακτικά)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <b>Δομή (Clean Architecture)</b>
+          <ul class="clean">
+            <li>Data: API services, DTOs, mappers, caches</li>
+            <li>Domain: use cases, entities</li>
+            <li>Presentation: ViewModels (Flow), UI screens</li>
+            <li>Sealed state: Loading/Content/Error/Empty</li>
+          </ul>
+        </div>
+        <div class="card">
+          <b>API & Pagination</b>
+          <ul class="clean">
+            <li>Λήψη Pokémon per type: <code class="inline">/type/{type}</code></li>
+            <li>Βαθμιαία λήψη details ανά 10 (HP/ATK/DEF + image)</li>
+            <li>Local cache για αποφυγή διπλών calls</li>
+            <li>Search εφαρμόζεται στο filtered set του τύπου (client-side)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="quality">
+      <h2>Ποιότητα, Testing & Εμπειρία Χρήστη</h2>
+      <div class="grid cols-3">
+        <div class="card">
+          <b>UX/States</b>
+          <ul class="clean">
+            <li>Skeletons/Spinners σε αρχικό φόρτωμα και “Load more”</li>
+            <li>Empty states με καθοδήγηση</li>
+            <li>Error states με retry ανά block</li>
+            <li>Θυμάται τον επιλεγμένο τύπο και το scroll position</li>
+          </ul>
+        </div>
+        <div class="card">
+          <b>Performance</b>
+          <ul class="clean">
+            <li>Coil image caching + placeholders</li>
+            <li>Batching detail requests (10-10)</li>
+            <li>Debounced search (300ms)</li>
+            <li>Memoization & in-memory cache per type</li>
+          </ul>
+        </div>
+        <div class="card">
+          <b>Testing</b>
+          <ul class="clean">
+            <li>Unit tests για mappers/use cases</li>
+            <li>ViewModel tests με Turbine</li>
+            <li>UI tests (Compose testing ή Espresso)</li>
+            <li>Contract tests για API models</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="timeline">
+      <h2>Εκτίμηση χρόνου υλοποίησης</h2>
+      <div class="grid cols-3">
+        <div class="card">
+          <b>1) Θεμελίωση (0.5–1 μέρα)</b>
+          <ul class="clean">
+            <li>Project setup, Hilt, Retrofit, modules</li>
+            <li>Models/DTOs, mappers, API contracts</li>
+          </ul>
+        </div>
+        <div class="card">
+          <b>2) Λογική & UI (1–1.5 μέρες)</b>
+          <ul class="clean">
+            <li>Type selection + search με debounce</li>
+            <li>Pagination 10-10 και caching</li>
+            <li>Details screen με HP/ATK/DEF & εικόνες</li>
+          </ul>
+        </div>
+        <div class="card">
+          <b>3) Polish & Tests (0.5–1 μέρα)</b>
+          <ul class="clean">
+            <li>Empty/error/loading states</li>
+            <li>Unit/UI tests, accessibility</li>
+            <li>Readme + μικρές βελτιώσεις</li>
+          </ul>
+        </div>
+      </div>
+      <p class="muted">Σύνολο: περίπου 2–3 εργάσιμες ημέρες (16–24 ώρες), ανάλογα με το επίπεδο polish και τις τυχόν διευκρινίσεις.</p>
+    </section>
+
+    <section id="questions">
+      <h2>Απορίες / Διευκρινίσεις</h2>
+      <div class="card">
+        <ul class="clean">
+          <li>Για την αναζήτηση: αποδεκτή είναι case-insensitive contains; Να υποστηριχθεί και αρχικογράμματα/accents handling;</li>
+          <li>Απαιτήσεις για offline λειτουργία; Εάν ναι, προτείνεται Room cache per type.</li>
+          <li>Σχεδιαστική κατεύθυνση: Material 3 light/dark ή custom theme;</li>
+          <li>Στόχος Android minSdk/targetSdk;</li>
+          <li>Περιορισμοί rate limiting του PokéAPI: Να προστεθεί exponential backoff;</li>
+        </ul>
+        <p class="muted">Σε περίπτωση που χρειαστούν διευκρινίσεις κατά το διάστημα OOO, θα απευθυνθώ στους @Harry Oikonomidis & @Paris Tsiogas.</p>
+      </div>
+    </section>
+
+    <section id="contacts">
+      <h2>Επικοινωνία</h2>
+      <div class="grid cols-2">
+        <div class="card">
+          <b>Desquared S.A.</b>
+          <p class="muted">
+            Thanos Zouganelis — Technical Product Manager<br />
+            Email: <a href="mailto:zouganelis@thinkdesquared.com">zouganelis@thinkdesquared.com</a><br />
+            Web: <a href="https://www.thinkdesquared.com" target="_blank" rel="noopener">thinkdesquared.com</a><br />
+            T: +30 210 7472700 — M: +30 6971833033
+          </p>
+        </div>
+        <div class="card">
+          <b>Heads (σε περίπτωση OOO)</b>
+          <ul class="clean">
+            <li>@Harry Oikonomidis — Head of Technology</li>
+            <li>@Paris Tsiogas — Head of Mobile Development</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      Παρουσίαση Pokémon Explorer App — Δημιουργήθηκε για τις ανάγκες του interview assignment.
+    </footer>
+  </div>
+
+  <script>
+    // Mock dataset για το demo (δεν κάνει network calls)
+    const TYPES = ["Fire","Water","Grass","Electric","Dragon","Psychic","Ghost","Dark","Steel","Fairy"];
+
+    // Δημιουργούμε μικρό mock pool per type για να δείξουμε filtering/search/pagination
+    const MOCK_DB = {};
+    function makePoke(id, name, type) {
+      // Τυχαία "ρεαλιστικά" stats για παρουσίαση
+      const rng = (seed) => Math.abs(Math.sin(id * 999 + seed));
+      const hp = 35 + Math.floor(rng(1)*65);     // 35-100
+      const atk = 30 + Math.floor(rng(2)*90);    // 30-120
+      const def = 30 + Math.floor(rng(3)*90);    // 30-120
+      return { id, name, type, hp, atk, def };
+    }
+    const SAMPLE_NAMES = [
+      "Charmander","Charmeleon","Charizard","Vulpix","Growlithe","Ponyta","Magmar","Houndour","Fennekin","Scorbunny",
+      "Squirtle","Wartortle","Blastoise","Psyduck","Poliwag","Tentacool","Seel","Totodile","Mudkip","Piplup",
+      "Bulbasaur","Ivysaur","Venusaur","Oddish","Bellsprout","Chikorita","Treecko","Turtwig","Snivy","Grookey",
+      "Pikachu","Raichu","Magnemite","Voltorb","Jolteon","Mareep","Elekid","Shinx","Yamper","Pawmi",
+      "Dratini","Dragonair","Dragonite","Bagon","Shelgon","Salamence","Gible","Garchomp","Deino","Noibat",
+      "Abra","Kadabra","Alakazam","Drowzee","Hypno","Ralts","Kirlia","Gardevoir","Medicham","Gothita",
+      "Gastly","Haunter","Gengar","Misdreavus","Shuppet","Duskull","Drifloon","Spiritomb","Litwick","Mimikyu",
+      "Umbreon","Murkrow","Houndoom","Sableye","Carvanha","Crawdaunt","Poochyena","Zorua","Inkay","Grimmsnarl",
+      "Magnemite","Magneton","Magnezone","Steelix","Scizor","Skarmory","Mawile","Aron","Beldum","Metagross",
+      "Clefairy","Clefable","Jigglypuff","Wigglytuff","Togepi","Togetic","Sylveon","Gardevoir","Florges","Mimikyu"
+    ];
+    // Κατανέμουμε ονόματα ανά τύπο κυκλικά
+    TYPES.forEach((t, idx) => {
+      const list = [];
+      for (let i = 0; i < 28; i++) {
+        const name = SAMPLE_NAMES[(idx*10 + i) % SAMPLE_NAMES.length] + (i>19 ? "★" : "");
+        list.push(makePoke(idx*1000 + i + 1, name, t));
+      }
+      MOCK_DB[t] = list;
+    });
+
+    // Κατάσταση demo
+    let state = {
+      type: TYPES[0],
+      query: "",
+      page: 1,
+      pageSize: 10
+    };
+
+    // Elements
+    const typeChipsEl = document.getElementById("typeChips");
+    const searchInput = document.getElementById("searchInput");
+    const clearSearchBtn = document.getElementById("clearSearchBtn");
+    const gridEl = document.getElementById("pokeGrid");
+    const infoEl = document.getElementById("resultsInfo");
+    const loadMoreBtn = document.getElementById("loadMoreBtn");
+
+    // Render type chips
+    function renderChips() {
+      typeChipsEl.innerHTML = "";
+      TYPES.forEach(t => {
+        const chip = document.createElement("button");
+        chip.className = "chip" + (t === state.type ? " active" : "");
+        chip.textContent = t;
+        chip.onclick = () => {
+          state.type = t;
+          state.page = 1;
+          render();
+        };
+        typeChipsEl.appendChild(chip);
+      });
+    }
+
+    function getFiltered() {
+      const all = MOCK_DB[state.type] || [];
+      if (!state.query.trim()) return all;
+      const q = state.query.trim().toLowerCase();
+      return all.filter(p => p.name.toLowerCase().includes(q));
+    }
+
+    function renderList() {
+      const filtered = getFiltered();
+      const total = filtered.length;
+      const shown = filtered.slice(0, state.page * state.pageSize);
+
+      infoEl.textContent = `${total} αποτελέσματα — εμφανίζονται ${shown.length}${total > shown.length ? ` από ${total}` : ""}`;
+
+      gridEl.innerHTML = "";
+      if (shown.length === 0) {
+        gridEl.innerHTML = `<div class="empty">Δεν βρέθηκαν Pokémon. Δοκίμασε άλλη λέξη-κλειδί ή επίλεξε άλλο τύπο.</div>`;
+      } else {
+        for (const p of shown) {
+          const card = document.createElement("div");
+          card.className = "poke-card";
+          card.innerHTML = `
+            <div class="poke-top">
+              <div style="display:flex;align-items:center;gap:10px;">
+                <div class="avatar">${p.name.charAt(0)}</div>
+                <div>
+                  <div class="poke-name">${p.name}</div>
+                  <div class="small ghost">${p.type}</div>
+                </div>
+              </div>
+              <div class="small ghost">#${p.id}</div>
+            </div>
+            <div class="stat-row">
+              <div class="stat"><b>HP</b>${p.hp}</div>
+              <div class="stat"><b>ATK</b>${p.atk}</div>
+              <div class="stat"><b>DEF</b>${p.def}</div>
+            </div>
+          `;
+          gridEl.appendChild(card);
+        }
+      }
+      // Load more visibility
+      if (filtered.length > shown.length) {
+        loadMoreBtn.style.display = "inline-flex";
+      } else {
+        loadMoreBtn.style.display = "none";
+      }
+    }
+
+    function render() {
+      renderChips();
+      renderList();
+    }
+
+    // Events
+    let debounceTimer = null;
+    searchInput.addEventListener("input", () => {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => {
+        state.query = searchInput.value;
+        state.page = 1;
+        renderList();
+      }, 250);
+    });
+    clearSearchBtn.addEventListener("click", () => {
+      searchInput.value = "";
+      state.query = "";
+      state.page = 1;
+      renderList();
+    });
+    loadMoreBtn.addEventListener("click", () => {
+      state.page += 1;
+      renderList();
+    });
+
+    // Init
+    render();
+  </script>
+</body>
+</html>
