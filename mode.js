@@ -1,6 +1,6 @@
 (function () {
   const root = document.documentElement;
-  const STORAGE_KEY = 'theme'; // 'light' | 'dark'
+  const STORAGE_KEY = 'theme';
   const btn = document.getElementById('themeToggle');
 
   function getInitialTheme() {
@@ -10,27 +10,29 @@
     return prefersDark ? 'dark' : 'light';
   }
 
-  function setMetaThemeColor(color) {
+  function setMetaThemeColorFromCSS() {
     const meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.setAttribute('content', color);
+    if (!meta) return;
+    const value = getComputedStyle(document.documentElement)
+      .getPropertyValue('--meta-theme')
+      .trim();
+    if (value) meta.setAttribute('content', value);
   }
 
   function applyTheme(theme) {
     if (theme === 'dark') {
       root.setAttribute('data-theme', 'dark');
       btn?.setAttribute('aria-pressed', 'true');
-      setMetaThemeColor('#0b0f14');
     } else {
-      root.removeAttribute('data-theme'); // light ως default
+      root.removeAttribute('data-theme');
       btn?.setAttribute('aria-pressed', 'false');
-      setMetaThemeColor('#f7f9fc');
     }
+    setMetaThemeColorFromCSS();
   }
 
   const initial = getInitialTheme();
   applyTheme(initial);
 
-  // Αν δεν υπάρχει explicit επιλογή, sync με αλλαγές συστήματος
   const media = window.matchMedia('(prefers-color-scheme: dark)');
   const mediaListener = (e) => {
     const saved = localStorage.getItem(STORAGE_KEY);

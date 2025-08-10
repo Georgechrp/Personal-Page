@@ -16,8 +16,7 @@ body {
   margin: 0;
   font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   color: var(--text);
-  background: radial-gradient(1200px 800px at 80% -10%, #13314a 0%, transparent 60%) no-repeat, var(--bg);
-  min-height: 100vh;
+  background: radial-gradient(1200px 800px at 80% -10%, var(--spot) 0%, transparent 60%) no-repeat, var(--bg);  min-height: 100vh;
   line-height: 1.6;
   overflow-x: hidden;
 }
@@ -120,6 +119,7 @@ body {
 .hero-inner {
   flex-direction: column;
   align-items: flex-start;
+  margin-top: 50px;
 }
 .hero-title {
   font-size: clamp(32px, 6vw, 56px);
@@ -248,7 +248,7 @@ body {
   border: 1px solid var(--border);
   border-radius: 16px;
   padding: clamp(18px, 2vw + 10px, 28px);
-  max-width: min(100%, 960px); /* πιο μακρύ (ευρύτερο) αλλά δεν ξεχειλώνει */
+  max-width: min(100%, 1100px); /* πιο φαρδιά */
   margin: 0 auto;
   -webkit-tap-highlight-color: transparent;
   width: 100%;                 /* να πιάνει όλο το διαθέσιμο πλάτος μέχρι το max */
@@ -258,6 +258,10 @@ body {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: clamp(12px, 1.2vw, 20px);
+}
+.section.contact h2 {
+  max-width: min(100%, 1100px);
+  margin: 0 auto clamp(12px, 1.5vw, 24px);
 }
 
 /* Stack σε mobile */
@@ -276,8 +280,7 @@ input,
 textarea {
   width: 100%;
   color: var(--text);
-  background: #0c121b;
-  border: 1px solid var(--border);
+  background: var(--input-bg);  border: 1px solid var(--border);
   border-radius: 14px;
   outline: none;
   transition: border-color .2s ease, box-shadow .2s ease, background-color .2s ease;
@@ -311,6 +314,9 @@ textarea:focus {
 }
 .footer-inner {
   padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .footer-inner p { margin: 0; color: var(--muted); }
 .socials { display: flex; gap: 14px; }
@@ -378,7 +384,7 @@ textarea:focus {
   display: inline-flex;
   width: 28px;
   height: 28px;
-  color: #222;            /* αλλάζει και το fill μέσω currentColor */
+  color: var(--icon);           /* αλλάζει και το fill μέσω currentColor */
   transition: transform 0.15s ease, color 0.15s ease, opacity 0.15s ease;
 }
 
@@ -395,8 +401,8 @@ textarea:focus {
 
 /* Προαιρετικά brand colors σε hover */
 .social2.github:hover { color: #000; }
-.social2.linkedin { color: #0A66C2; }
-.social2.instagram { color: #E1306C; }
+.social2.linkedin { color: var(--icon); }
+.social2.instagram { color: var(--icon); }
 
 
 
@@ -458,8 +464,8 @@ textarea:focus {
   transition: background 0.2s ease, transform 0.08s ease, border-color 0.2s ease;
 }
 .theme-toggle:active { transform: scale(0.96); }
-.theme-toggle:hover { background: rgba(0,0,0,0.06); }
-:root[data-theme="dark"] .theme-toggle:hover { background: rgba(255,255,255,0.06); }
+.theme-toggle:hover { .theme-toggle:hover { background: var(--hover-veil); } }
+
 
 .theme-toggle .icon {
   width: 18px;
@@ -477,3 +483,131 @@ textarea:focus {
 
 /* Να “κάθεται” σαν nav item δίπλα στο Contact */
 .nav .nav-links li .theme-toggle { margin-left: 6px; }
+
+/* Στο τέλος, μαζί με τα theme blocks */
+:root:not([data-theme="dark"]) {
+  --spot: #dfe9f6;          /* light “glow” */
+  --input-bg: #ffffff;      /* light inputs */
+  --icon: #0b0f14;          /* icon base στο light */
+  --hover-veil: rgba(0,0,0,0.06);
+}
+
+:root[data-theme="dark"] {
+  --spot: #13314a;          /* dark “glow” (ή ό,τι προτιμάς) */
+  --input-bg: #0c121b;      /* dark inputs */
+  --icon: #e6edf3;          /* icon base στο dark */
+  --hover-veil: rgba(255,255,255,0.06);
+}
+
+
+
+
+/* ===== Light/Dark glass και meta-theme ===== */
+:root:not([data-theme="dark"]) {
+  /* Λίγο πιο “καθαρό” muted για καλύτερη αντίθεση στο white */
+  --muted: #3f4b59;
+
+  /* Γυαλί για header στο light */
+  --glass-start: rgba(255, 255, 255, 0.85);
+  --glass-end: rgba(255, 255, 255, 0.55);
+
+  /* Χρώμα theme-bar σε mobile browsers (light) */
+  --meta-theme: #f7f9fc;
+}
+
+:root[data-theme="dark"] {
+  /* Γυαλί για header στο dark (ίδιο οπτικό με αυτό που είχες) */
+  --glass-start: rgba(15, 22, 33, 0.85);
+  --glass-end: rgba(15, 22, 33, 0.30);
+
+  /* Χρώμα theme-bar σε mobile browsers (dark) */
+  --meta-theme: #0b0f14;
+}
+
+/* ===== Header: χρησιμοποίησε τις μεταβλητές αντί για hardcoded rgba ===== */
+.site-header {
+  background: linear-gradient(to bottom, var(--glass-start), var(--glass-end));
+}
+
+/* ===== Hover states ουδέτερα ανά theme (όχι λευκό 4% που χάνεται στο light) ===== */
+.nav-links a:hover {
+  background: var(--hover-veil);
+}
+
+/* ===== Διόρθωση bug στον selector (ήταν nested by mistake) ===== */
+.theme-toggle:hover { 
+  background: var(--hover-veil);
+}
+
+/* ===== Card/Feature hover: ουδέτερη ανύψωση με veil αντί για hardcoded σκουρόχρωμο ===== */
+.card:hover, .feature:hover {
+  /* προσθέτουμε ένα λεπτό veil πάνω από το card background */
+  background: linear-gradient(0deg, var(--hover-veil), var(--hover-veil)), var(--card);
+  /* λίγο πιο έντονο border-hover, αλλά με ασφάλεια */
+  border-color: color-mix(in srgb, var(--accent-2) 40%, var(--border) 60%);
+}
+
+/* Προαιρετικό: αν θέλεις να ενοποιήσεις ΚΑΙ τα παλιά selectors που είχαν fixed σκοτεινό χρώμα */
+.feature:hover { background-color: unset; }
+.card:hover { background-color: unset; }
+
+
+
+
+
+
+
+
+/* ===== Light/Dark glass και meta-theme ===== */
+:root:not([data-theme="dark"]) {
+  /* Λίγο πιο “καθαρό” muted για καλύτερη αντίθεση στο white */
+  --muted: #3f4b59;
+
+  /* Γυαλί για header στο light */
+  --glass-start: rgba(255, 255, 255, 0.85);
+  --glass-end: rgba(255, 255, 255, 0.55);
+
+  /* Χρώμα theme-bar σε mobile browsers (light) */
+  --meta-theme: #f7f9fc;
+}
+
+:root[data-theme="dark"] {
+  /* Γυαλί για header στο dark (ίδιο οπτικό με αυτό που είχες) */
+  --glass-start: rgba(15, 22, 33, 0.85);
+  --glass-end: rgba(15, 22, 33, 0.30);
+
+  /* Χρώμα theme-bar σε mobile browsers (dark) */
+  --meta-theme: #0b0f14;
+}
+
+/* ===== Header: χρησιμοποίησε τις μεταβλητές αντί για hardcoded rgba ===== */
+.site-header {
+  background: linear-gradient(to bottom, var(--glass-start), var(--glass-end));
+}
+
+/* ===== Hover states ουδέτερα ανά theme (όχι λευκό 4% που χάνεται στο light) ===== */
+.nav-links a:hover {
+  background: var(--hover-veil);
+}
+
+/* ===== Διόρθωση bug στον selector (ήταν nested by mistake) ===== */
+.theme-toggle:hover {
+  background: var(--hover-veil);
+}
+
+/* ===== Card/Feature hover: ουδέτερη ανύψωση με veil αντί για hardcoded σκουρόχρωμο ===== */
+.card:hover, .feature:hover {
+  /* προσθέτουμε ένα λεπτό veil πάνω από το card background */
+  background: linear-gradient(0deg, var(--hover-veil), var(--hover-veil)), var(--card);
+  /* λίγο πιο έντονο border-hover, αλλά με ασφάλεια */
+  border-color: color-mix(in srgb, var(--accent-2) 40%, var(--border) 60%);
+}
+
+/* Προαιρετικό: αν θέλεις να ενοποιήσεις ΚΑΙ τα παλιά selectors που είχαν fixed σκοτεινό χρώμα */
+.feature:hover { background-color: unset; }
+.card:hover { background-color: unset; }
+
+/* ===== Footer glass fix (use theme vars instead of fixed dark rgba) ===== */
+.site-footer {
+  background: linear-gradient(to top, var(--glass-start), var(--glass-end));
+}
