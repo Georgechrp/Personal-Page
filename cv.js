@@ -1,5 +1,5 @@
 (function () {
-    const cvUrl = '/George_Christopoulos_CV.pdf'; // Βάλε εδώ το δικό σου URL (π.χ. /cv/George_Chr.pdf ή πλήρες https URL)
+    const cvUrl = 'assets/George_Christopoulos_CV.pdf'; // Βάλε εδώ το δικό σου URL (π.χ. /cv/George_Chr.pdf ή πλήρες https URL)
 
     const openBtn = document.querySelector('.cv-btn');
     const modal = document.getElementById('cvModal');

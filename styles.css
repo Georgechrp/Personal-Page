@@ -12,25 +12,168 @@
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
+/* Body: καθαρό theme-aware background χωρίς canvas */
+/* Body: καθαρό theme-aware background χωρίς canvas */
+/* Body: καθαρό theme-aware background χωρίς canvas */
 body {
   margin: 0;
   font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   color: var(--text);
-  background: radial-gradient(1200px 800px at 80% -10%, var(--spot) 0%, transparent 60%) no-repeat, var(--bg);  min-height: 100vh;
+  background: var(--bg);
+  min-height: 100vh;
   line-height: 1.6;
   overflow-x: hidden;
 }
 
-/* Background canvas */
-#bg-canvas {
+/* ΝΕΟ διακοσμητικό background layer */
+.bg {
   position: fixed;
   inset: 0;
-  width: 100vw;
-  height: 100vh;
   z-index: -1;
-  filter: blur(12px) saturate(110%);
-  opacity: 0.28;
   pointer-events: none;
+  /* Βασικό soft glow (σέβεται --spot) */
+  background:
+    radial-gradient(1200px 800px at 70% -10%, color-mix(in srgb, var(--spot) 70%, transparent) 0%, transparent 60%);
+  /* Ελαφρύ grain για υφή */
+  isolation: isolate;
+}
+.bg::before,
+.bg::after {
+  content: "";
+  position: absolute;
+  width: 55vmax;
+  height: 55vmax;
+  border-radius: 50%;
+  filter: blur(60px) saturate(110%);
+  opacity: 0.28;
+  transform: translate(-10%, -10%) scale(1);
+  animation: floatBlob 28s ease-in-out infinite;
+}
+
+/* Πρώτο blob με --accent */
+.bg::before {
+  top: 8%;
+  left: 10%;
+  background: radial-gradient(circle at 40% 40%,
+    color-mix(in srgb, var(--accent) 45%, transparent) 0%,
+    transparent 60%);
+}
+
+/* Δεύτερο blob με --accent-2 */
+.bg::after {
+  bottom: 0%;
+  right: -6%;
+  background: radial-gradient(circle at 60% 60%,
+    color-mix(in srgb, var(--accent-2) 45%, transparent) 0%,
+    transparent 60%);
+  animation-delay: 8s;
+}
+
+/* Αργή, διακριτική κίνηση */
+@keyframes floatBlob {
+  0%   { transform: translate(-6%, -6%) scale(1); }
+  50%  { transform: translate(2%, 2%) scale(1.06); }
+  100% { transform: translate(-6%, -6%) scale(1); }
+}
+
+/* Προαιρετικό: πολύ διακριτικό grid για “techy” αίσθηση */
+.bg::marker { content: none; } /* avoid accidental markers */
+.bg > i { display: none; }     /* placeholder guard */
+
+.bg::after, .bg::before { will-change: transform, opacity, filter; }
+
+/* Αν θέλεις micro-grid layer, ξεκλείδωσέ το: */
+
+.bg::marker { content: none; }
+.bg::selection { background: transparent; }
+.bg::backdrop { background: transparent; }
+
+.bg::shadow { content: ""; }
+.bg::selection, .bg::backdrop, .bg::shadow { display: none; }
+
+.bg .grid {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      to right,
+      color-mix(in srgb, var(--text) 4%, transparent) 0 1px,
+      transparent 1px 24px
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--text) 4%, transparent) 0 1px,
+      transparent 1px 24px
+    );
+  mask-image: radial-gradient(60% 60% at 50% 40%, #000 60%, transparent 100%);
+  opacity: 0.06;
+}
+
+/* === Vibrant Indigo/Cyan palette override + punchier background === */
+:root,
+:root[data-theme="dark"] {
+  --bg: #0a1020;          /* deep navy */
+  --bg-soft: #0d152b;     /* darker navy glass */
+  --text: #e7eefc;        /* soft ice white */
+  --muted: #9bb0d1;       /* cool desaturated blue */
+  --accent: #3b82f6;      /* vivid blue */
+  --accent-2: #22d3ee;    /* cyan pop */
+  --card: #0b1330cc;      /* navy glass */
+  --border: #1a2a4a;      /* navy border */
+  --shadow: 0 10px 30px rgba(0,0,0,0.35);
+  --spot: #0d1b3a;        /* deep blue glow */
+  --input-bg: #0b1326;    /* inputs on dark */
+  --icon: #e7eefc;
+  --hover-veil: rgba(255,255,255,0.06);
+}
+
+:root:not([data-theme="dark"]) {
+  --bg: #f5f8ff;          /* soft blue-white */
+  --bg-soft: #ffffff;
+  --text: #0a1020;        /* deep navy text */
+  --muted: #4b5568;       /* cool gray-blue */
+  --accent: #2563eb;      /* strong blue */
+  --accent-2: #0ea5e9;    /* sky cyan */
+  --card: #ffffffcc;
+  --border: #e3eaf8;      /* light blue border */
+  --shadow: 0 10px 30px rgba(0,0,0,0.12);
+  --spot: #e8efff;        /* light blue glow */
+  --input-bg: #ffffff;
+  --icon: #0a1020;
+  --hover-veil: rgba(0,0,0,0.06);
+}
+
+/* Stronger, more colorful minimal background */
+.bg {
+  background:
+    radial-gradient(1100px 780px at 82% -12%, color-mix(in srgb, var(--accent-2) 25%, transparent) 0%, transparent 60%),
+    radial-gradient(900px 700px at 12% 86%, color-mix(in srgb, var(--accent) 22%, transparent) 0%, transparent 62%),
+    var(--bg);
+}
+
+.bg::before,
+.bg::after {
+  width: 60vmax;
+  height: 60vmax;
+  filter: blur(70px) saturate(120%);
+  opacity: 0.34;          /* a touch stronger */
+}
+
+.bg::before {
+  top: 4%;
+  left: 8%;
+  background: radial-gradient(circle at 45% 40%,
+    color-mix(in srgb, var(--accent) 55%, transparent) 0%,
+    transparent 62%);
+}
+
+.bg::after {
+  bottom: -6%;
+  right: -8%;
+  background: radial-gradient(circle at 55% 55%,
+    color-mix(in srgb, var(--accent-2) 55%, transparent) 0%,
+    transparent 62%);
 }
 
 /* Header */
@@ -171,6 +314,18 @@ body {
 .section {
   padding: 56px 20px;
 }
+/* Μείωση του top padding ΜΟΝΟ για skills & contact */
+#skills.section,
+#contact.section {
+  padding-top: 20px;
+}
+
+/* Αφαίρεση extra top-margin από τα h2 */
+#skills h2,
+#contact h2 {
+  margin-top: 0;
+}
+
 .container {
   max-width: 1100px;
   margin: 0 auto;
@@ -403,7 +558,7 @@ textarea:focus {
 
 
 .card[data-project="chordio"] .card-media {
-  background-image: url("app_flow.png");
+  background-image: url("assets/images/app_flow.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -413,7 +568,7 @@ textarea:focus {
 
 
 .card[data-project="pokemonexplorer"] .card-media {
-  background-image: url("pokemonicon.png");
+  background-image: url("assets/images/pokemonicon.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -421,7 +576,7 @@ textarea:focus {
 }
 
 .card[data-project="salesflow"] .card-media {
-  background-image: url("salesflow.png");
+  background-image: url("assets/images/salesflow.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -477,14 +632,14 @@ textarea:focus {
 /* Αν θες μια πολύ διακριτική διαχωριστική γραμμή στο Skills */
 #skills .container { border-top: 1px solid var(--border); padding-top: 20px; }
 
-/* Αν θες μια πολύ διακριτική διαχωριστική γραμμή στο Skills */
+#education .container { border-top: 1px solid var(--border); padding-top: 20px; }
+
+
 #work .container { border-top: 1px solid var(--border); padding-top: 20px; }
 
 
-/* Αν θες μια πολύ διακριτική διαχωριστική γραμμή στο Skills */
 #contact .container { border-top: 1px solid var(--border); padding-top: 20px; }
 
-/* Αν θες μια πολύ διακριτική διαχωριστική γραμμή στο Skills */
 #about .container { border-top: 1px solid var(--border); padding-top: 20px; }
 
 .about-edu {
@@ -494,7 +649,37 @@ textarea:focus {
   color: var(--muted);
   font-size: clamp(14px, 1.4vw, 16px);
 }
+.about-wrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  flex-wrap: wrap;  /* για να γίνεται stack σε mobile */
+}
 
+.about-photo img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 16px;
+}
+
+
+
+#about .container {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  flex-wrap: wrap; /* για responsiveness */
+}
+
+.about-photo {
+  flex-shrink: 0;
+}
+
+.about-texts {
+  flex: 1 1 0;
+  min-width: 280px; /* για να μην γίνει πολύ στενό σε μικρές οθόνες */
+}
 /* Μικρή “ετικέτα” πριν το κείμενο */
 .edu-label {
   display: inline-block;

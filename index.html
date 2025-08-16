@@ -35,8 +35,9 @@
   <meta name="theme-color" content="#0a0a0a">
 </head>
 <body>
-  <canvas id="bg-canvas" aria-hidden="true"></canvas>
+  <!--<canvas id="bg-canvas" aria-hidden="true"></canvas>-->
 
+  <div class="bg" aria-hidden="true"></div>
   <header class="site-header">
     <a href="#" class="logo">Christopoulos George</a>
     <nav class="nav">
@@ -101,55 +102,73 @@
   </a>
 
   <!-- CV button (opens modal with embedded PDF) -->
-<!-- CV button (opens modal with embedded PDF) -->
-  <button type="button" class="social2 cv cv-btn" aria-haspopup="dialog" aria-controls="cvModal" aria-label="Άνοιγμα Βιογραφικού (PDF)">
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M14 1 L23 10 L14 10 Z" fill="currentColor"/>
-      <rect x="5" y="12" width="14" height="3.2" rx="1.6" fill="currentColor"/>
-      <rect x="5" y="17" width="12" height="3.2" rx="1.6" fill="currentColor"/>
-    </svg>
-  </button>
+  <!-- CV button (opens modal with embedded PDF) -->
+    <button type="button" class="social2 cv cv-btn" aria-haspopup="dialog" aria-controls="cvModal" aria-label="Άνοιγμα Βιογραφικού (PDF)">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M14 1 L23 10 L14 10 Z" fill="currentColor"/>
+        <rect x="5" y="12" width="14" height="3.2" rx="1.6" fill="currentColor"/>
+        <rect x="5" y="17" width="12" height="3.2" rx="1.6" fill="currentColor"/>
+      </svg>
+    </button>
 
-    <!-- Modal -->
-    <div id="cvModal" class="cv-modal" role="dialog" aria-modal="true" aria-labelledby="cvTitle" aria-hidden="true">
-      <div class="cv-backdrop" data-close></div>
-      <div class="cv-dialog" role="document">
-        <header class="cv-header">
-          <h2 id="cvTitle">Βιογραφικό (PDF)</h2>
-          <button type="button" class="cv-close" aria-label="Κλείσιμο" title="Κλείσιμο" data-close>&times;</button>
-        </header>
-        <div class="cv-body">
-          <iframe id="cvFrame" src="" title="Ενσωματωμένο Βιογραφικό PDF" loading="lazy"></iframe>
-          <div class="cv-fallback">
-            Δεν εμφανίζεται το PDF;
-            <a id="cvDownload" href="#" target="_blank" rel="noopener">Πατήστε εδώ</a>.
+      <!-- Modal -->
+      <div id="cvModal" class="cv-modal" role="dialog" aria-modal="true" aria-labelledby="cvTitle" aria-hidden="true">
+        <div class="cv-backdrop" data-close></div>
+        <div class="cv-dialog" role="document">
+          <header class="cv-header">
+            <h2 id="cvTitle">Βιογραφικό (PDF)</h2>
+            <button type="button" class="cv-close" aria-label="Κλείσιμο" title="Κλείσιμο" data-close>&times;</button>
+          </header>
+          <div class="cv-body">
+            <iframe id="cvFrame" src="" title="Ενσωματωμένο Βιογραφικό PDF" loading="lazy"></iframe>
+            <div class="cv-fallback">
+              Δεν εμφανίζεται το PDF;
+              <a id="cvDownload" href="#" target="_blank" rel="noopener">Πατήστε εδώ</a>.
+            </div>
           </div>
         </div>
       </div>
-    </div>
-</div>
+  </div>
       </div>
     </section>
 
-    <section class="section" id="about">
+      <section class="section" id="about">
+        <div class="container">
+          <h2>About</h2>
+
+          <div class="about-wrapper">
+            <div class="about-photo">
+              <img src="assets/images/me.png" alt="George Christopoulos" loading="lazy" decoding="async" />
+            </div>
+
+            <div class="about-texts">
+              <p class="about-lead">
+                Junior Software Engineer with a strong interest in Android development and experience in building Kotlin-based
+                applications. Eager to contribute to real-world projects and grow within a collaborative and innovative team environment.
+              </p>
+              <p class="about-lead">
+                During my studies at the University of Piraeus, I worked on several projects, including my thesis, "Chordio" — a mobile app that helps users find guitar chords for their favorite songs.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+
+
+
+    <section class="section" id="education">
       <div class="container">
-        <h2>About</h2>
-        <p class="about-lead">
-          Junior Software Engineer with a strong interest in Android development and experience in building Kotlin-based
-          applications. Eager to contribute to real-world projects and grow within a collaborative and innovative team environment.
-        </p>
-
-        <p class="about-lead">
-          During my studies at the University of Piraeus, I worked on several projects, including my thesis, "Chordio" — a mobile app that helps users find guitar chords for their favorite songs.
-        </p>
-
+        <h2>Education</h2>
+        
         <p class="about-edu">
-          <span class="edu-label">Education</span>
           Department of Informatics, University of Piraeus — BSc in Computer Science
           [<span class="nowrap">2020‑2025</span>]
         </p>
       </div>
     </section>
+
 
     <section class="section" id="skills">
       <div class="container">
@@ -299,6 +318,7 @@
         <a href="https://t.me/Georgechrp" target="_blank" rel="noopener noreferrer" aria-label="Telegram" class="social2 telegram">
           <svg viewBox="0 0 240 240" aria-hidden="true"><path fill="currentColor" d="M120 0C53.73 0 0 53.73 0 120s53.73 120 120 120 120-53.73 120-120S186.27 0 120 0zm56.6 81.6l-23.2 109.6c-1.8 8.1-6.6 10.1-13.4 6.3l-37-27.3-17.9 17.2c-2 2-3.7 3.7-7.6 3.7l2.7-38.2 69.6-62.8c3-2.7-0.7-4.2-4.6-1.5l-86.1 54.2-37.1-11.6c-8-2.5-8.1-8-1.7-10.6l145.1-55.9c6.7-2.5 12.6 1.5 10.4 10.5z"/></svg>
         </a>
+        
       </div>
     </div>
 
