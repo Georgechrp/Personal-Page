@@ -7,7 +7,10 @@ navToggle?.addEventListener('click', () => {
   document.body.classList.toggle('nav-open');
 });
 document.querySelectorAll('.nav-links a').forEach(a => {
-  a.addEventListener('click', () => document.body.classList.remove('nav-open'));
+  a.addEventListener('click', () => {
+    document.body.classList.remove('nav-open');
+    navToggle.setAttribute('aria-expanded', 'false'); // <-- reset το aria-expanded
+  });
 });
 
 // Set current year
