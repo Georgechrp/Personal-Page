@@ -671,12 +671,8 @@ textarea:focus {
   .about-photo {
     margin-bottom: 16px;
   }
-
-  .about-photo img {
-    width: 140px;
-    height: 140px;
-  }
 }
+
 
 
 
