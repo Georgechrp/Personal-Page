@@ -565,7 +565,13 @@ textarea:focus {
   height: 200px; /* αν θες λίγο πιο ψηλή */
 }
 
-
+.card[data-project="moviesearch"] .card-media {
+  background-image: url("assets/images/moviesearchapp.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 200px; /* αν θες λίγο πιο ψηλή */
+}
 
 .card[data-project="pokemonexplorer"] .card-media {
   background-image: url("assets/images/pokemonicon.png");
