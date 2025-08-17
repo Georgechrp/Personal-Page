@@ -92,7 +92,39 @@
       <span class="tech">Coroutines</span>
       <span class="tech">Navigation Compose</span>
     </div>
+<h2>⚙️ Dependencies & Plugins</h2>
+    <p>Οι βασικές βιβλιοθήκες / plugins που χρησιμοποιήθηκαν στο project:</p>
+    <pre style="background:#2d2d2d; color:#f8f8f2; padding:1rem; border-radius:8px; overflow-x:auto; font-size:0.9rem;">
+        // Dependency Injection
+        implementation(libs.hilt.android)
+        kapt(libs.hilt.compiler)
 
+        // Network
+        implementation(libs.retrofit)
+        implementation(libs.retrofit.gson)
+        implementation(libs.gson)
+        implementation(libs.retrofit.moshi)
+        implementation(libs.moshi.kotlin)
+        implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+        implementation("com.squareup.okhttp3:okhttp:4.12.0")
+
+        // Navigation
+        implementation(libs.androidx.hilt.navigation.compose)
+        implementation("androidx.navigation:navigation-compose:2.7.7")
+
+        // Images
+        implementation("io.coil-kt:coil-compose:2.6.0")
+
+        // Coroutines
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
+
+        // UI
+        implementation("androidx.compose.material:material-icons-extended:1.6.8")
+
+        // Plugins (Gradle)
+        alias(libs.plugins.kotlin.kapt)
+        alias(libs.plugins.hilt)
+            </pre>
     <h2>📸 Screenshots</h2>
     <div class="screenshots">
       <img src="screenshots/splashscreen.jpg" alt="Splashs creen">
@@ -102,7 +134,7 @@
     </div>
 
     <div style="text-align:center;">
-      <a href="https://github.com/USERNAME/MovieSearch" target="_blank" class="btn">🔗 View on GitHub</a>
+      <a href="https://github.com/Georgechrp/MovieSearch" target="_blank" class="btn">🔗 View on GitHub</a>
     </div>
   </div>
 
