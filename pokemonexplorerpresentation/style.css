@@ -128,3 +128,33 @@ body {
 
   object-fit: cover;
 }
+
+
+<style>
+  .video-wrap {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+  .video-wrap video {
+    max-width: 250px;   /* Κάνει το βίντεο πιο μικρό */
+    width: 100%;        /* Προσαρμόζεται αναλογικά */
+    border-radius: 8px; /* Προαιρετικό, για πιο όμορφο στύλ */
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  }
+</style>
+
+<section id="demo" class="section alt">
+  <div class="container">
+    <h3>Demo / Βίντεο</h3>
+    <p>
+       <code>Video Presentation</code>.
+    </p>
+    <div class="video-wrap">
+      <video id="demoVideo" controls preload="metadata">
+        <source src="assets/screens/video.mp4" type="video/mp4" />
+        Το πρόγραμμα περιήγησής σου δεν υποστηρίζει ενσωματωμένα βίντεο.
+      </video>
+    </div>
+  </div>
+</section>
