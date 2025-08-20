@@ -407,7 +407,7 @@ body {
   max-width: min(100%, 1100px); /* πιο φαρδιά */
   margin: 0 auto;
   -webkit-tap-highlight-color: transparent;
-  width: 100%;                 /* να πιάνει όλο το διαθέσιμο πλάτος μέχρι το max */
+  width: 60%;                 /* να πιάνει όλο το διαθέσιμο πλάτος μέχρι το max */
 }
 
 .form-row {
@@ -599,7 +599,7 @@ textarea:focus {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px 20px;
-  margin-top: 10px;
+  margin-top: 0px;
 }
 @media (min-width: 768px) and (max-width: 1024px) {
   #skills .skills-groups { grid-template-columns: 2fr 2fr; }
