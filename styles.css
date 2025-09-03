@@ -407,7 +407,7 @@ body {
   max-width: min(100%, 1100px); /* πιο φαρδιά */
   margin: 0 auto;
   -webkit-tap-highlight-color: transparent;
-  width: 60%;                 /* να πιάνει όλο το διαθέσιμο πλάτος μέχρι το max */
+  width: 100%;   /* σε default (κινητά) να πιάνει όλο το πλάτος */
 }
 
 .form-row {
@@ -458,10 +458,11 @@ textarea:focus {
 }
 
 /* Λίγο πιο φαρδύ σε πολύ μεγάλα screens */
-@media (min-width: 1200px) {
-  .contact-form { max-width: 880px; }
+@media (min-width: 992px) {
+  .contact-form {
+    width: 70%;   /* ή 60% όπως είχες πριν */
+  }
 }
-
 /* Big Footer */
 .site-footer {
   background: linear-gradient(to top, var(--glass-start), var(--glass-end));

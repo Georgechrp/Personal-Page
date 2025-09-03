@@ -1,9 +1,8 @@
 // Typing + deleting loop για πολλές προτάσεις
 const phrases = [
-  "Open to Remote/Hybrid Positions",
-  "Junior Software Engineer",
+  "Mobile Software Engineer",
   "Informatics Graduate, University of Piraeus",
-  "Kotlin Enthusiast",
+  "Guitar Player"
 ];
 
 const el = document.getElementById('typeTarget');
