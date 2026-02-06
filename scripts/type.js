@@ -1,6 +1,6 @@
 // Typing + deleting loop για πολλές προτάσεις
 const phrases = [
-  "Android Software Engineer",
+  "Android Software Engineer at Desquared",
   "BSc in Informatics, University of Piraeus",
   "Passionate about guitar and electronic music"
 ];
