@@ -1,17 +1,53 @@
 // Mobile nav toggle
-const navToggle = document.querySelector('.nav-toggle');
-const header = document.querySelector('.site-header');
-navToggle?.addEventListener('click', () => {
-  const expanded = navToggle.getAttribute('aria-expanded') === 'true';
-  navToggle.setAttribute('aria-expanded', String(!expanded));
+const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+const sidebar = document.querySelector('.sidebar');
+const sidebarBackdrop = document.querySelector('.sidebar-backdrop');
+
+mobileMenuToggle?.addEventListener('click', () => {
+  const expanded = mobileMenuToggle.getAttribute('aria-expanded') === 'true';
+  mobileMenuToggle.setAttribute('aria-expanded', String(!expanded));
   document.body.classList.toggle('nav-open');
 });
+
+// Close menu when clicking navigation links
 document.querySelectorAll('.nav-links a').forEach(a => {
   a.addEventListener('click', () => {
     document.body.classList.remove('nav-open');
-    navToggle.setAttribute('aria-expanded', 'false'); // <-- reset το aria-expanded
+    mobileMenuToggle?.setAttribute('aria-expanded', 'false');
   });
 });
+
+// Close menu when clicking backdrop
+sidebarBackdrop?.addEventListener('click', () => {
+  document.body.classList.remove('nav-open');
+  mobileMenuToggle?.setAttribute('aria-expanded', 'false');
+});
+
+// Active navigation link on scroll
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+
+function highlightNavigation() {
+  const scrollY = window.pageYOffset;
+  
+  sections.forEach(section => {
+    const sectionHeight = section.offsetHeight;
+    const sectionTop = section.offsetTop - 100;
+    const sectionId = section.getAttribute('id');
+    
+    if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${sectionId}`) {
+          link.classList.add('active');
+        }
+      });
+    }
+  });
+}
+
+window.addEventListener('scroll', highlightNavigation);
+highlightNavigation(); // Call on page load
 
 // Set current year
 document.getElementById('year').textContent = new Date().getFullYear();

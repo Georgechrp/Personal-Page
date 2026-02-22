@@ -5,75 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="/assets/images/moviesearchapp.png" sizes="any">
   <title>MovieSearch App - Presentation</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0; padding: 0;
-      background: #f9f9f9;
-      color: #333;
-    }
-    header {
-      background: #2c3e50;
-      color: white;
-      text-align: center;
-      padding: 2rem 1rem;
-    }
-    header h1 {
-      margin: 0;
-    }
-    .container {
-      max-width: 900px;
-      margin: auto;
-      padding: 2rem;
-    }
-    h2 {
-      color: #2c3e50;
-      margin-top: 2rem;
-    }
-    .tech-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-top: 1rem;
-    }
-    .tech {
-      background: #ecf0f1;
-      padding: 0.5rem 1rem;
-      border-radius: 6px;
-      font-size: 0.9rem;
-    }
-    .screenshots {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1rem;
-      margin-top: 1rem;
-    }
-    .screenshots img {
-      width: 100%;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-    }
-    .btn {
-      display: inline-block;
-      background: #3498db;
-      color: white;
-      text-decoration: none;
-      padding: 0.75rem 1.5rem;
-      border-radius: 6px;
-      margin-top: 2rem;
-      font-weight: bold;
-      transition: background 0.3s;
-    }
-    .btn:hover {
-      background: #2980b9;
-    }
-    footer {
-      text-align: center;
-      font-size: 0.9rem;
-      color: #888;
-      padding: 2rem 1rem;
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header>
@@ -94,7 +26,7 @@
       <span class="tech">Navigation Compose</span>
       <span class="tech">Clean Architecture</span>
     </div>
-        <div style="text-align:center;">
+    <div class="button-container">
       <a href="https://github.com/Georgechrp/MovieSearch" target="_blank" class="btn">🔗 View on GitHub</a>
       <a href="app-debug.apk" download class="btn">Download the App</a>
     </div>
@@ -140,13 +72,13 @@
     </div>
 
     <h2>🎥 Demo Video</h2>
-    <div style="text-align:center;">
-    <video width="30%" style="align-items: center;" controls>
-      <source src="demo.mp4" type="video/mp4">
-      Ο περιηγητής σας δεν υποστηρίζει βίντεο.
-    </video>
+    <div class="video-container">
+      <video controls>
+        <source src="demo.mp4" type="video/mp4">
+        Ο περιηγητής σας δεν υποστηρίζει βίντεο.
+      </video>
     </div>
-      </div>
+  </div>
 
   <footer>
     Made with ❤️ using Android & Kotlin | TMDB API Integration | George Christopoulos

@@ -156,6 +156,15 @@
         document.getElementById("sidebar").style.width = "0";
       });
     });
+    
+    // Close sidebar when clicking outside (mobile UX improvement)
+    document.addEventListener("click", (e) => {
+      const sidebar = document.getElementById("sidebar");
+      const hamburger = document.querySelector(".hamburger");
+      if (sidebar.style.width === "250px" && !sidebar.contains(e.target) && !hamburger.contains(e.target)) {
+        sidebar.style.width = "0";
+      }
+    });
   </script>
 
 

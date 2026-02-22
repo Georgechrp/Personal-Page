@@ -1,1119 +1,1389 @@
+/* ===============================================
+   Modern Minimal Portfolio - Clean & Contemporary
+   =============================================== */
+
 :root {
-  --bg: #0b0f14;
-  --bg-soft: #0f141b;
-  --text: #e6edf3;
-  --muted: #9aa4b2;
-  --accent: #66e0c2;
-  --accent-2: #7aa2f7;
-  --card: #0f1621cc;
-  --border: #1d2733;
-  --shadow: 0 10px 30px rgba(0,0,0,0.3);
+  /* Dark Theme (Default) */
+  --bg: #0a0f1a;
+  --bg-secondary: #101520;
+  --text: #e8edf4;
+  --text-secondary: #8b95a8;
+  --accent: #5b9eff;
+  --accent-secondary: #7c3aed;
+  --border: rgba(255, 255, 255, 0.06);
+  --hover: rgba(255, 255, 255, 0.03);
+  
+  /* Spacing */
+  --section-padding: clamp(60px, 10vw, 120px);
+  --container-padding: clamp(20px, 5vw, 40px);
+  
+  /* Typography */
+  --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --line-height: 1.7;
+  
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.16);
 }
 
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-/* Body: καθαρό theme-aware background χωρίς canvas */
-/* Body: καθαρό theme-aware background χωρίς canvas */
-/* Body: καθαρό theme-aware background χωρίς canvas */
-body {
+/* Light Theme */
+:root:not([data-theme="dark"]) {
+  --bg: #fafbfc;
+  --bg-secondary: #ffffff;
+  --text: #131720;
+  --text-secondary: #5c6270;
+  --accent: #3b82f6;
+  --accent-secondary: #7c3aed;
+  --border: rgba(0, 0, 0, 0.08);
+  --hover: rgba(0, 0, 0, 0.04);
+  
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.08);
+}
+
+* {
+  box-sizing: border-box;
   margin: 0;
-  font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  color: var(--text);
-  background: var(--bg);
-  min-height: 100vh;
-  line-height: 1.6;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  /* Prevent horizontal overflow */
   overflow-x: hidden;
 }
 
-/* ΝΕΟ διακοσμητικό background layer */
+body {
+  font-family: var(--font-primary);
+  color: var(--text);
+  background: var(--bg);
+  line-height: var(--line-height);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Support for notched devices */
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+
+/* Improve touch scrolling on iOS */
+* {
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 768px) {
+  body.nav-open {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+  }
+}
+
+/* Background decoration - subtle and minimal */
 .bg {
   position: fixed;
   inset: 0;
+  left: 80px;
   z-index: -1;
   pointer-events: none;
-  /* Βασικό soft glow (σέβεται --spot) */
-  background:
-    radial-gradient(1200px 800px at 70% -10%, color-mix(in srgb, var(--spot) 70%, transparent) 0%, transparent 60%);
-  /* Ελαφρύ grain για υφή */
-  isolation: isolate;
-}
-.bg::before,
-.bg::after {
-  content: "";
-  position: absolute;
-  width: 55vmax;
-  height: 55vmax;
-  border-radius: 50%;
-  filter: blur(60px) saturate(110%);
-  opacity: 0.28;
-  transform: translate(-10%, -10%) scale(1);
-  animation: floatBlob 28s ease-in-out infinite;
+  opacity: 0.4;
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(91, 158, 255, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(124, 58, 237, 0.08) 0%, transparent 40%);
+  transition: left 0.3s ease;
 }
 
-/* Πρώτο blob με --accent */
-.bg::before {
-  top: 8%;
-  left: 10%;
-  background: radial-gradient(circle at 40% 40%,
-    color-mix(in srgb, var(--accent) 45%, transparent) 0%,
-    transparent 60%);
+@media (max-width: 768px) {
+  .bg {
+    left: 0;
+  }
 }
 
-/* Δεύτερο blob με --accent-2 */
-.bg::after {
-  bottom: 0%;
-  right: -6%;
-  background: radial-gradient(circle at 60% 60%,
-    color-mix(in srgb, var(--accent-2) 45%, transparent) 0%,
-    transparent 60%);
-  animation-delay: 8s;
-}
+/* ===============================================
+   Sidebar Navigation
+   =============================================== */
 
-/* Αργή, διακριτική κίνηση */
-@keyframes floatBlob {
-  0%   { transform: translate(-6%, -6%) scale(1); }
-  50%  { transform: translate(2%, 2%) scale(1.06); }
-  100% { transform: translate(-6%, -6%) scale(1); }
-}
-
-/* Προαιρετικό: πολύ διακριτικό grid για “techy” αίσθηση */
-.bg::marker { content: none; } /* avoid accidental markers */
-.bg > i { display: none; }     /* placeholder guard */
-
-.bg::after, .bg::before { will-change: transform, opacity, filter; }
-
-/* Αν θέλεις micro-grid layer, ξεκλείδωσέ το: */
-
-.bg::marker { content: none; }
-.bg::selection { background: transparent; }
-.bg::backdrop { background: transparent; }
-
-.bg::shadow { content: ""; }
-.bg::selection, .bg::backdrop, .bg::shadow { display: none; }
-
-.bg .grid {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    repeating-linear-gradient(
-      to right,
-      color-mix(in srgb, var(--text) 4%, transparent) 0 1px,
-      transparent 1px 24px
-    ),
-    repeating-linear-gradient(
-      to bottom,
-      color-mix(in srgb, var(--text) 4%, transparent) 0 1px,
-      transparent 1px 24px
-    );
-  mask-image: radial-gradient(60% 60% at 50% 40%, #000 60%, transparent 100%);
-  opacity: 0.06;
-}
-
-/* === Vibrant Indigo/Cyan palette override + punchier background === */
-:root,
-:root[data-theme="dark"] {
-  --bg: #0a1020;          /* deep navy */
-  --bg-soft: #0d152b;     /* darker navy glass */
-  --text: #e7eefc;        /* soft ice white */
-  --muted: #9bb0d1;       /* cool desaturated blue */
-  --accent: #3b82f6;      /* vivid blue */
-  --accent-2: #22d3ee;    /* cyan pop */
-  --card: #0b1330cc;      /* navy glass */
-  --border: #1a2a4a;      /* navy border */
-  --shadow: 0 10px 30px rgba(0,0,0,0.35);
-  --spot: #0d1b3a;        /* deep blue glow */
-  --input-bg: #0b1326;    /* inputs on dark */
-  --icon: #e7eefc;
-  --hover-veil: rgba(255,255,255,0.06);
-}
-
-:root:not([data-theme="dark"]) {
-  --bg: #f5f8ff;          /* soft blue-white */
-  --bg-soft: #ffffff;
-  --text: #0a1020;        /* deep navy text */
-  --muted: #4b5568;       /* cool gray-blue */
-  --accent: #2563eb;      /* strong blue */
-  --accent-2: #0ea5e9;    /* sky cyan */
-  --card: #ffffffcc;
-  --border: #e3eaf8;      /* light blue border */
-  --shadow: 0 10px 30px rgba(0,0,0,0.12);
-  --spot: #e8efff;        /* light blue glow */
-  --input-bg: #ffffff;
-  --icon: #0a1020;
-  --hover-veil: rgba(0,0,0,0.06);
-}
-
-/* Stronger, more colorful minimal background */
-.bg {
-  background:
-    radial-gradient(1100px 780px at 82% -12%, color-mix(in srgb, var(--accent-2) 25%, transparent) 0%, transparent 60%),
-    radial-gradient(900px 700px at 12% 86%, color-mix(in srgb, var(--accent) 22%, transparent) 0%, transparent 62%),
-    var(--bg);
-}
-
-.bg::before,
-.bg::after {
-  width: 60vmax;
-  height: 60vmax;
-  filter: blur(70px) saturate(120%);
-  opacity: 0.34;          /* a touch stronger */
-}
-
-.bg::before {
-  top: 4%;
-  left: 8%;
-  background: radial-gradient(circle at 45% 40%,
-    color-mix(in srgb, var(--accent) 55%, transparent) 0%,
-    transparent 62%);
-}
-
-.bg::after {
-  bottom: -6%;
-  right: -8%;
-  background: radial-gradient(circle at 55% 55%,
-    color-mix(in srgb, var(--accent-2) 55%, transparent) 0%,
-    transparent 62%);
-}
-
-/* Header */
-.site-header {
-  position: sticky;
+.sidebar {
+  position: fixed;
+  left: 0;
   top: 0;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  background: linear-gradient(to bottom, rgba(15,22,33,0.85), rgba(15,22,33,0.3));
-  border-bottom: 1px solid var(--border);
-  z-index: 10;
+  bottom: 0;
+  width: 80px;
+  background: var(--bg-secondary);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 0;
+  z-index: 100;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
-.site-header .logo {
-  font-weight: 800;
-  letter-spacing: 0.5px;
-  color: var(--text);
-  text-decoration: none;
+:root:not([data-theme="dark"]) .sidebar {
+  background: var(--bg-secondary);
 }
 
-.site-header,
-.footer-inner,
-.container,
-.hero-inner {
+.sidebar:hover {
+  width: 220px;
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 2px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+.sidebar-header {
+  margin-bottom: 40px;
+}
+
+.logo {
+  width: 48px;
+  height: 48px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 14px 20px;
-}
-
-.nav { display: flex; align-items: center; gap: 16px; }
-.nav-links { display: flex; list-style: none; gap: 16px; margin: 0; padding: 0; }
-.nav-links a {
-  color: var(--muted);
+  justify-content: center;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #ffffff;
   text-decoration: none;
-  padding: 8px 10px;
-  border-radius: 8px;
-  transition: color .2s ease, background-color .2s ease;
-}
-.nav-links a:hover { color: var(--text); background: rgba(255,255,255,0.04); }
-
-/* Mobile menu */
-.nav-toggle {
-  display: none;
-  width: 44px; height: 36px;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  background: transparent;
-  position: relative;
-  cursor: pointer;
-}
-.nav-toggle span {
-  position: absolute; left: 10px; right: 10px; height: 2px; background: var(--text);
-  transition: transform .25s ease, top .25s ease, opacity .2s ease;
-}
-.nav-toggle span:nth-child(1){ top: 11px; }
-.nav-toggle span:nth-child(2){ top: 17px; }
-.nav-toggle span:nth-child(3){ top: 23px; }
-.nav-open .nav-toggle span:nth-child(1){ top: 17px; transform: rotate(45deg); }
-.nav-open .nav-toggle span:nth-child(2){ opacity: 0; }
-.nav-open .nav-toggle span:nth-child(3){ top: 17px; transform: rotate(-45deg); }
-
-@media (max-width: 800px) {
-  .nav-toggle { display: inline-block; }
-  .nav-links {
-    position: absolute; right: 20px; top: 64px;
-    background: var(--bg-soft);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 10px;
-    flex-direction: column;
-    gap: 6px;
-    min-width: 180px;
-    box-shadow: var(--shadow);
-    display: none;
-  }
-  .nav-open .nav-links { display: flex; }
-}
-
-/* Hero */
-.hero {
-  padding: 96px 20px 72px;
-}
-.hero-inner {
-  flex-direction: column;
-  align-items: flex-start;
-  margin-top: clamp(24px, 8svh, 80px);
-}
-.hero-title {
-  font-size: clamp(32px, 6vw, 56px);
-  line-height: 1.1;
-  margin: 0 0 12px;
-}
-.hero-subtitle {
-  font-size: clamp(16px, 2.3vw, 20px);
-  color: var(--muted);
-  margin: 0 0 24px;
-}
-
-#typeTarget {
-  border-right: 2px solid currentColor;
-  white-space: nowrap;
-}
-
-/* προαιρετικό blinking caret αν δεν θες JS για το caret */
-@keyframes caretBlink { 50% { border-color: transparent; } }
-#typeTarget { animation: caretBlink 600ms steps(1) infinite; }
-
-.accent {
-  background: linear-gradient(90deg, var(--accent), var(--accent-2));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.cta { display: flex; gap: 12px; }
-.btn {
-  display: inline-block;
+  background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
   border-radius: 12px;
-  padding: 12px 16px;
-  text-decoration: none;
-  transition: transform .15s ease, background-color .2s ease, color .2s ease, border-color .2s ease;
-  border: 1px solid var(--border);
-  color: var(--text);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(91, 158, 255, 0.2);
 }
-.btn.primary {
-  background: linear-gradient(90deg, rgba(102,224,194,0.15), rgba(122,162,247,0.15));
-  border-color: rgba(122,162,247,0.4);
-  cursor: pointer;
-}
-.btn.ghost { background: transparent; }
-.btn:hover { transform: translateY(-2px); }
 
-/* Sections */
-.section {
-  padding: 56px 20px;
+.logo:hover {
+  transform: scale(1.05) rotate(-5deg);
+  box-shadow: 0 8px 24px rgba(91, 158, 255, 0.4);
 }
-/* Μείωση του top padding ΜΟΝΟ για skills & contact */
-#skills.section,
-#experience.section,
-#contact.section {
+
+.sidebar-nav {
+  flex: 1;
+  width: 100%;
+}
+
+.nav-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.nav-links li {
+  width: 100%;
+}
+
+.nav-links a {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 16px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  border-radius: 12px;
+  margin: 0 12px;
+  position: relative;
+}
+
+.nav-links a svg {
+  width: 22px;
+  height: 22px;
+  min-width: 22px;
+  flex-shrink: 0;
+  fill: currentColor;
+}
+
+.nav-links a span {
+  opacity: 0;
+  white-space: nowrap;
+  transition: opacity 0.2s ease 0.1s;
+  transform: translateX(-10px);
+}
+
+.sidebar:hover .nav-links a span {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Tooltip for collapsed state */
+.nav-links a::after {
+  content: attr(title);
+  position: absolute;
+  left: calc(100% + 12px);
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--bg-secondary);
+  color: var(--text);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-md);
+  z-index: 1000;
+}
+
+.nav-links a:hover::after {
+  opacity: 1;
+}
+
+.sidebar:hover .nav-links a::after {
+  opacity: 0;
+}
+
+.nav-links a:hover,
+.nav-links a:focus {
+  color: var(--text);
+  background: var(--hover);
+}
+
+.nav-links a::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 0;
+  background: var(--accent);
+  border-radius: 0 2px 2px 0;
+  transition: height 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-links a:hover::before,
+.nav-links a:focus::before {
+  height: 70%;
+}
+
+.nav-links a.active {
+  color: var(--accent);
+  background: rgba(91, 158, 255, 0.1);
+}
+
+.nav-links a.active::before {
+  height: 70%;
+}
+
+/* Sidebar Footer */
+.sidebar-footer {
+  margin-top: auto;
   padding-top: 20px;
 }
 
-/* Αφαίρεση extra top-margin από τα h2 */
-#skills h2,
-#experience h2,
-#contact h2 {
-  margin-top: 0;
-}
-
-.container {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 0 0;
-  flex-wrap: wrap;
-}
-.section h2 {
-  font-size: clamp(22px, 3vw, 28px);
-  margin: 0 0 12px;
-  
-}
-.section p { color: var(--muted); margin: 0 0 24px; }
-
-/* Features */
-.features {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
-}
-.feature {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 18px;
-  box-shadow: var(--shadow);
-  transition: transform .2s ease, border-color .2s ease, background-color .2s ease;
-}
-.feature:hover { transform: translateY(-3px); border-color: rgba(122,162,247,0.4); background: #0f162188; }
-
-@media (max-width: 900px) {
-  .features { grid-template-columns: 1fr; }
-}
-
-/* Work grid */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
-}
-@media (max-width: 1100px) {
-  .grid { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 700px) {
-  .grid { grid-template-columns: 1fr; }
-}
-
-.card {
-  display: flex;
-  flex-direction: column;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: var(--shadow);
-  transition: transform .2s ease, border-color .2s ease, background-color .2s ease;
-}
-.card:hover { transform: translateY(-4px); border-color: rgba(102,224,194,0.35); background: #0f162188; }
-.card-media {
-  height: 160px;
-  background: linear-gradient(135deg, rgba(102,224,194,0.3), rgba(122,162,247,0.3));
-}
-.card-body {
-  padding: 16px;
-}
-.card-body h3 { margin: 0 0 6px; }
-.card-body p { margin: 0 0 12px; color: var(--muted); }
-.card-actions { display: flex; gap: 10px; }
-.link { color: var(--accent-2); text-decoration: none; }
-.link:hover { text-decoration: underline; }
-
-/* Contact */
-.contact-form {
-  display: grid;
-  gap: clamp(14px, 1.2vw, 20px);
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: clamp(18px, 2vw + 10px, 28px);
-  max-width: min(100%, 1100px); /* πιο φαρδιά */
-  margin: 0 auto;
-  -webkit-tap-highlight-color: transparent;
-  width: 100%;   /* σε default (κινητά) να πιάνει όλο το πλάτος */
-}
-
-.form-row {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(12px, 1.2vw, 20px);
-}
-.section.contact h2 {
-  max-width: min(100%, 1100px);
-  margin: 0 auto clamp(12px, 1.5vw, 24px);
-}
-
-/* Stack σε mobile */
-@media (max-width: 768px) {
-  .form-row { grid-template-columns: 1fr; }
-}
-
-label {
-  display: grid;
-  gap: 6px;
-  font-weight: 600;
-  font-size: clamp(0.95rem, 0.4vw + 0.9rem, 1.05rem);
-}
-
-input,
-textarea {
-  width: 100%;
-  color: var(--text);
-  background: var(--input-bg);  border: 1px solid var(--border);
-  border-radius: 14px;
-  outline: none;
-  transition: border-color .2s ease, box-shadow .2s ease, background-color .2s ease;
-  font-size: clamp(1rem, 0.5vw + 0.95rem, 1.125rem);     /* >=16px για αποφυγή zoom σε iOS */
-  line-height: 1.5;
-  padding: clamp(12px, 0.8vw + 8px, 16px) clamp(12px, 0.8vw + 8px, 16px);
-  min-height: clamp(48px, 4.5vw, 56px);                  /* άνετο tap target */
-}
-
-textarea {
-  min-height: clamp(140px, 20vw, 220px);
-  resize: vertical;
-}
-
-input:focus,
-textarea:focus {
-  border-color: rgba(122,162,247,0.5);
-  box-shadow: 0 0 0 4px rgba(122,162,247,0.15);
-}
-
-/* Λίγο πιο φαρδύ σε πολύ μεγάλα screens */
-@media (min-width: 992px) {
-  .contact-form {
-    width: 70%;   /* ή 60% όπως είχες πριν */
-  }
-}
-/* Big Footer */
-.site-footer {
-  background: linear-gradient(to top, var(--glass-start), var(--glass-end));
-  border-top: 1px solid var(--border);
-  margin-top: 56px;
-}
-
-/* Top section */
-.footer-grid {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1.3fr;
-  gap: 24px;
-  padding: 32px 20px 16px;
-  align-items: start;
-}
-@media (max-width: 900px) {
-  .footer-grid { grid-template-columns: 1fr; padding: 28px 20px 8px; }
-}
-
-.footer-brand h3 {
-  margin: 0 0 8px;
-  font-size: clamp(20px, 2.2vw, 24px);
-}
-.footer-tagline {
-  margin: 0 0 12px;
-  color: var(--muted);
-}
-
-.footer-links, .footer-contact {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.footer-links h4, .footer-contact h4 {
-  margin: 0 0 4px;
-  font-size: clamp(16px, 1.8vw, 18px);
-}
-.footer-links a {
-  color: var(--muted);
-  text-decoration: none;
-  padding: 6px 0;
-  border-radius: 8px;
-  transition: color .2s ease, background-color .2s ease;
-}
-.footer-links a:hover { color: var(--text); background: var(--hover-veil); }
-
-/* Reuse socials2 styling; ensure base color and hover */
-.socials2 { margin-top: 10px; }
-.social2 { color: var(--icon); }
-.social2.github:hover { color: #000; }
-.social2.linkedin:hover { color: #0A66C2; }
-.social2.telegram:hover { color: #229ED9; }
-
-/* Bottom bar */
-.footer-bottom {
-  border-top: 1px solid var(--border);
-  margin-top: 16px;
-  background: linear-gradient(to top, var(--glass-start), transparent);
-}
-.footer-bottom-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 14px 20px 20px;
-}
-.footer-bottom p {
-  margin: 0;
-  color: var(--muted);
-  font-size: 0.95rem;
-}
-@media (max-width: 480px) {
-  .footer-links a { padding: 8px 10px; }
-  .footer-bottom-inner { flex-direction: row; gap: 8px; }
-}
-/* Back-to-top */
-.to-top {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px; height: 40px;
-  border-radius: 999px;
-  border: 1px solid var(--border);
-  color: var(--text);
-  background: transparent;
-  transition: background .2s ease, transform .08s ease, border-color .2s ease, opacity .2s ease;
-  text-decoration: none;
-}
-.to-top:hover { background: var(--hover-veil); }
-.to-top:active { transform: scale(0.96); }
-.to-top svg { width: 18px; height: 18px; }
-
-
-
-
-.card[data-project="chordio"] .card-media {
-  background-image: url("assets/images/app_flow.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 200px; /* αν θες λίγο πιο ψηλή */
-}
-
-.card[data-project="moviesearch"] .card-media {
-  background-image: url("assets/images/moviesearchapp.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 200px; /* αν θες λίγο πιο ψηλή */
-}
-
-.card[data-project="pokemonexplorer"] .card-media {
-  background-image: url("assets/images/pokemonicon.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 200px; /* αν θες λίγο πιο ψηλή */
-}
-
-.card[data-project="salesflow"] .card-media {
-  background-image: url("assets/images/salesflow.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 200px; /* αν θες λίγο πιο ψηλή */
-}
-
-
-
-
-
-
-/* Skills σε groups με chips */
-#skills .skills-groups {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px 20px;
-  margin-top: 0px;
-}
-@media (min-width: 768px) and (max-width: 1024px) {
-  #skills .skills-groups { grid-template-columns: 2fr 2fr; }
-  .grid { grid-template-columns: repeat(2, 1fr); }
-}
-
-.skills-group h3 {
-  margin: 0 0 8px;
-  font-size: clamp(18px, 1.8vw, 20px);
-}
-
-.chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.chip {
-  display: inline-flex;
-  align-items: center;
-  padding: 8px 12px;
-  border-radius: 999px;
-  border: 1px solid var(--border);
-  background: var(--hover-veil);
-  color: var(--text);
-  font-size: 0.95rem;
-  line-height: 1;
-  transition: transform .12s ease, border-color .2s ease, background-color .2s ease;
-}
-.chip:hover {
-  transform: translateY(-1px);
-  border-color: color-mix(in srgb, var(--accent-2) 40%, var(--border) 60%);
-  background: linear-gradient(0deg, var(--hover-veil), var(--hover-veil));
-}
-
-/* Αν θες μια πολύ διακριτική διαχωριστική γραμμή στο Skills */
-#skills .container { border-top: 1px solid var(--border); padding-top: 20px; }
-
-#education .container { border-top: 1px solid var(--border); padding-top: 20px; }
-
-#experience .container { border-top: 1px solid var(--border); padding-top: 20px; }
-
-#work .container { border-top: 1px solid var(--border); padding-top: 20px; }
-
-
-#contact .container { border-top: 1px solid var(--border); padding-top: 20px; }
-
-#about .container { border-top: 1px solid var(--border); padding-top: 20px; }
-
-.about-edu {
-  max-width: 760px;
-  margin: 8px auto 0;
-  text-align: left;
-  color: var(--muted);
-  font-size: clamp(14px, 1.4vw, 16px);
-}
-.about-wrapper {
-  display: flex;
-  align-items: flex-start;
-  gap: 24px;
-  flex-wrap: wrap;  /* για να γίνεται stack σε mobile */
-}
-
-.about-photo img {
-  width: 200px;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 16px;
-}
-@media (max-width: 700px) {
-  .about-wrapper {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .about-photo {
-    margin-bottom: 16px;
-  }
-}
-
-
-
-
-#about .container {
-  display: flex;
-  align-items: flex-start;
-  gap: 24px;
-  flex-wrap: wrap; /* για responsiveness */
-}
-
-.about-photo {
-  flex-shrink: 0;
-}
-
-.about-texts {
-  flex: 1 1 0;
-  min-width: 280px; /* για να μην γίνει πολύ στενό σε μικρές οθόνες */
-}
-/* Μικρή “ετικέτα” πριν το κείμενο */
-.edu-label {
-  display: inline-block;
-  margin-right: 8px;
-  padding: 2px 8px;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  background: var(--hover-veil);
-  color: var(--text);
-  font-weight: 600;
-  font-size: 0.8rem;
-  text-align: left;
-  line-height: 1.2;
-}.nowrap { white-space: nowrap; }
-
-
-
-
-.socials2 {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-}
-
-.social2 {
-  display: inline-flex;
-  width: 28px;
-  height: 28px;
-  color: var(--icon);           /* αλλάζει και το fill μέσω currentColor */
-  transition: transform 0.15s ease, color 0.15s ease, opacity 0.15s ease;
-}@media (max-width: 480px) {
-  .social2 { width: 32px; height: 32px; }
-  .btn { padding: 14px 18px; } /* πιο άνετο πάτημα */
-}
-
-.social2 svg {
-  width: 100%;
-  height: 100%;
-  display: block;     /* πρόσθεσέ το */
-  fill: currentColor;     /* τα SVG paths παίρνουν το color του .social */
-}
-
-.social2:hover {
-  transform: translateY(-1px);
-  opacity: 0.9;
-}
-
-/* Προαιρετικά brand colors σε hover */
-.social2.github:hover { color: #000; }
-.social2.linkedin { color: var(--icon); }
-.social2.instagram { color: var(--icon); }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* Light theme values όταν ΔΕΝ είναι ενεργό data-theme="dark" */
-:root:not([data-theme="dark"]) {
-  --bg: #f7f9fc;
-  --bg-soft: #ffffff;
-  --text: #0b0f14;
-  --muted: #556274;
-  --accent: #1ea38e;      /* διακριτικό teal για light */
-  --accent-2: #366af6;    /* καθαρότερο μπλε για light */
-  --card: #ffffffcc;
-  --border: #e6eaf0;
-  --shadow: 0 10px 30px rgba(0,0,0,0.12);
-}
-
-/* Ό,τι έχεις ήδη στο :root είναι το dark set.
-   Για σιγουριά, όταν data-theme="dark" κλειδώνουμε αυτές τις τιμές */
-:root[data-theme="dark"] {
-  --bg: #0b0f14;
-  --bg-soft: #0f141b;
-  --text: #e6edf3;
-  --muted: #9aa4b2;
-  --accent: #66e0c2;
-  --accent-2: #7aa2f7;
-  --card: #0f1621cc;
-  --border: #1d2733;
-  --shadow: 0 10px 30px rgba(0,0,0,0.3);
-}
-
-/* Minimal theme toggle button */
+/* Theme Toggle */
 .theme-toggle {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 999px;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
   border: 1px solid var(--border);
   background: transparent;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
   padding: 0;
-  transition: background 0.2s ease, transform 0.08s ease, border-color 0.2s ease;
+  color: var(--text);
 }
-.theme-toggle:active { transform: scale(0.96); }
-.theme-toggle:hover { .theme-toggle:hover { background: var(--hover-veil); } }
 
+.theme-toggle:hover {
+  background: var(--hover);
+  border-color: var(--accent);
+}
 
 .theme-toggle .icon {
-  width: 18px;
-  height: 18px;
-  fill: currentColor;
-  color: var(--text);
-  opacity: 0.9;
+  width: 20px;
+  height: 20px;
+  transition: fill 0.2s;
 }
 
-/* Εναλλαγή εικονιδίων: Light => δείχνει Moon, Dark => δείχνει Sun */
 :root:not([data-theme="dark"]) .theme-toggle .sun { display: none; }
 :root:not([data-theme="dark"]) .theme-toggle .moon { display: block; }
 :root[data-theme="dark"] .theme-toggle .sun { display: block; }
 :root[data-theme="dark"] .theme-toggle .moon { display: none; }
 
-/* Να “κάθεται” σαν nav item δίπλα στο Contact */
-.nav .nav-links li .theme-toggle { margin-left: 6px; }
-
-/* Στο τέλος, μαζί με τα theme blocks */
-:root:not([data-theme="dark"]) {
-  --spot: #dfe9f6;          /* light “glow” */
-  --input-bg: #ffffff;      /* light inputs */
-  --icon: #0b0f14;          /* icon base στο light */
-  --hover-veil: rgba(0,0,0,0.06);
+/* Mobile Menu Toggle */
+.mobile-menu-toggle {
+  display: none;
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--bg-secondary);
+  cursor: pointer;
+  z-index: 101;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--shadow-md);
 }
 
-:root[data-theme="dark"] {
-  --spot: #13314a;          /* dark “glow” (ή ό,τι προτιμάς) */
-  --input-bg: #0c121b;      /* dark inputs */
-  --icon: #e6edf3;          /* icon base στο dark */
-  --hover-veil: rgba(255,255,255,0.06);
+.mobile-menu-toggle:hover {
+  transform: scale(1.05);
+  border-color: var(--accent);
+  box-shadow: var(--shadow-lg);
 }
 
-
-
-
-/* ===== Light/Dark glass και meta-theme ===== */
-:root:not([data-theme="dark"]) {
-  /* Λίγο πιο “καθαρό” muted για καλύτερη αντίθεση στο white */
-  --muted: #3f4b59;
-
-  /* Γυαλί για header στο light */
-  --glass-start: rgba(255, 255, 255, 0.85);
-  --glass-end: rgba(255, 255, 255, 0.55);
-
-  /* Χρώμα theme-bar σε mobile browsers (light) */
-  --meta-theme: #f7f9fc;
+.mobile-menu-toggle:active {
+  transform: scale(0.95);
 }
 
-:root[data-theme="dark"] {
-  /* Γυαλί για header στο dark (ίδιο οπτικό με αυτό που είχες) */
-  --glass-start: rgba(15, 22, 33, 0.85);
-  --glass-end: rgba(15, 22, 33, 0.30);
-
-  /* Χρώμα theme-bar σε mobile browsers (dark) */
-  --meta-theme: #0b0f14;
+.mobile-menu-toggle span {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  height: 2px;
+  background: var(--text);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 1px;
 }
 
-/* ===== Header: χρησιμοποίησε τις μεταβλητές αντί για hardcoded rgba ===== */
-.site-header {
-  background: linear-gradient(to bottom, var(--glass-start), var(--glass-end));
+.mobile-menu-toggle span:nth-child(1) { top: 16px; }
+.mobile-menu-toggle span:nth-child(2) { top: 23px; }
+.mobile-menu-toggle span:nth-child(3) { top: 30px; }
+
+body.nav-open .mobile-menu-toggle {
+  background: var(--accent);
+  border-color: var(--accent);
 }
 
-/* ===== Hover states ουδέτερα ανά theme (όχι λευκό 4% που χάνεται στο light) ===== */
-.nav-links a:hover {
-  background: var(--hover-veil);
+body.nav-open .mobile-menu-toggle span {
+  background: #ffffff;
 }
 
-/* ===== Διόρθωση bug στον selector (ήταν nested by mistake) ===== */
-.theme-toggle:hover { 
-  background: var(--hover-veil);
+body.nav-open .mobile-menu-toggle span:nth-child(1) { 
+  top: 23px; 
+  transform: rotate(45deg); 
+}
+body.nav-open .mobile-menu-toggle span:nth-child(2) { 
+  opacity: 0;
+  transform: scale(0);
+}
+body.nav-open .mobile-menu-toggle span:nth-child(3) { 
+  top: 23px; 
+  transform: rotate(-45deg); 
 }
 
-/* ===== Card/Feature hover: ουδέτερη ανύψωση με veil αντί για hardcoded σκουρόχρωμο ===== */
-.card:hover, .feature:hover {
-  /* προσθέτουμε ένα λεπτό veil πάνω από το card background */
-  background: linear-gradient(0deg, var(--hover-veil), var(--hover-veil)), var(--card);
-  /* λίγο πιο έντονο border-hover, αλλά με ασφάλεια */
-  border-color: color-mix(in srgb, var(--accent-2) 40%, var(--border) 60%);
+@media (max-width: 768px) {
+  .mobile-menu-toggle { display: block; }
+  
+  .sidebar {
+    transform: translateX(-100%);
+    width: 260px;
+    box-shadow: var(--shadow-lg);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  body.nav-open .sidebar {
+    transform: translateX(0);
+  }
+  
+  .sidebar .nav-links a span {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  
+  .sidebar .nav-links a::after {
+    display: none;
+  }
+  
+  .sidebar:hover {
+    width: 260px;
+  }
 }
 
-/* Προαιρετικό: αν θέλεις να ενοποιήσεις ΚΑΙ τα παλιά selectors που είχαν fixed σκοτεινό χρώμα */
-.feature:hover { background-color: unset; }
-.card:hover { background-color: unset; }
-
-
-
-
-
-
-
-
-/* ===== Light/Dark glass και meta-theme ===== */
-:root:not([data-theme="dark"]) {
-  /* Λίγο πιο “καθαρό” muted για καλύτερη αντίθεση στο white */
-  --muted: #3f4b59;
-
-  /* Γυαλί για header στο light */
-  --glass-start: rgba(255, 255, 255, 0.85);
-  --glass-end: rgba(255, 255, 255, 0.55);
-
-  /* Χρώμα theme-bar σε mobile browsers (light) */
-  --meta-theme: #f7f9fc;
+/* Mobile menu backdrop */
+.sidebar-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 99;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
-:root[data-theme="dark"] {
-  /* Γυαλί για header στο dark (ίδιο οπτικό με αυτό που είχες) */
-  --glass-start: rgba(15, 22, 33, 0.85);
-  --glass-end: rgba(15, 22, 33, 0.30);
-
-  /* Χρώμα theme-bar σε mobile browsers (dark) */
-  --meta-theme: #0b0f14;
+@media (max-width: 768px) {
+  body.nav-open .sidebar-backdrop {
+    display: block;
+    opacity: 1;
+  }
 }
 
-/* ===== Header: χρησιμοποίησε τις μεταβλητές αντί για hardcoded rgba ===== */
-.site-header {
-  background: linear-gradient(to bottom, var(--glass-start), var(--glass-end));
+/* ===============================================
+   Layout & Containers
+   =============================================== */
+
+main {
+  margin-left: 80px;
+  transition: margin-left 0.3s ease;
 }
 
-/* ===== Hover states ουδέτερα ανά theme (όχι λευκό 4% που χάνεται στο light) ===== */
-.nav-links a:hover {
-  background: var(--hover-veil);
+@media (max-width: 768px) {
+  main {
+    margin-left: 0;
+  }
 }
 
-/* ===== Διόρθωση bug στον selector (ήταν nested by mistake) ===== */
-.theme-toggle:hover {
-  background: var(--hover-veil);
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--container-padding);
 }
 
-/* ===== Card/Feature hover: ουδέτερη ανύψωση με veil αντί για hardcoded σκουρόχρωμο ===== */
-.card:hover, .feature:hover {
-  /* προσθέτουμε ένα λεπτό veil πάνω από το card background */
-  background: linear-gradient(0deg, var(--hover-veil), var(--hover-veil)), var(--card);
-  /* λίγο πιο έντονο border-hover, αλλά με ασφάλεια */
-  border-color: color-mix(in srgb, var(--accent-2) 40%, var(--border) 60%);
+.section {
+  padding: var(--section-padding) 0;
 }
 
-/* Προαιρετικό: αν θέλεις να ενοποιήσεις ΚΑΙ τα παλιά selectors που είχαν fixed σκοτεινό χρώμα */
-.feature:hover { background-color: unset; }
-.card:hover { background-color: unset; }
-
-/* ===== Footer glass fix (use theme vars instead of fixed dark rgba) ===== */
-.site-footer {
-  background: linear-gradient(to top, var(--glass-start), var(--glass-end));
+.section-title {
+  font-size: clamp(2rem, 5vw, 2.5rem);
+  font-weight: 700;
+  margin-bottom: 48px;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
 }
 
+/* ===============================================
+   Hero Section
+   =============================================== */
 
+.hero {
+  min-height: 85vh;
+  display: flex;
+  align-items: center;
+  padding: 80px 0;
+}
 
+.hero .container {
+  width: 100%;
+}
 
+.hero-content {
+}
 
+.hero-title {
+  font-size: clamp(2.5rem, 8vw, 4.5rem);
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 24px;
+  letter-spacing: -0.04em;
+}
 
+.accent {
+  background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
 
+.hero-subtitle {
+  font-size: clamp(1.125rem, 3vw, 1.375rem);
+  color: var(--text-secondary);
+  margin-bottom: 40px;
+  min-height: 40px;
+}
 
+#typeTarget {
+  border-right: 2px solid var(--accent);
+  white-space: nowrap;
+}
 
+.cta {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
 
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 28px;
+  border-radius: 10px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid var(--border);
+  transition: all 0.2s;
+  cursor: pointer;
+  background: transparent;
+  color: var(--text);
+  min-height: 44px;
+  -webkit-tap-highlight-color: transparent;
+}
 
-/* CV button — ίδιο styling με τα social εικονίδια */
+/* Touch device improvements for buttons */
+@media (hover: none) and (pointer: coarse) {
+  .btn {
+    min-height: 48px;
+    padding: 16px 32px;
+  }
+}
+
+.btn.primary {
+  background: var(--accent);
+  color: #ffffff;
+  border-color: var(--accent);
+}
+
+.btn.primary:hover,
+.btn.primary:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(91, 158, 255, 0.3);
+  outline: none;
+}
+
+.btn.primary:active {
+  transform: translateY(0);
+}
+
+.btn.secondary {
+  background: transparent;
+  color: var(--text);
+  border-color: var(--border);
+}
+
+.btn.secondary:hover,
+.btn.secondary:focus {
+  background: var(--hover);
+  border-color: var(--accent);
+  outline: none;
+}
+
+.btn.secondary:active {
+  background: var(--hover);
+}
+
+/* Social Icons */
+.socials2 {
+  display: flex;
+  gap: 16px;
+  margin-top: 48px;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.social2 {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  transition: all 0.2s;
+  text-decoration: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+}
+
+.social2 svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+.social2:hover,
+.social2:focus {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+  color: var(--accent);
+  outline: none;
+}
+
+.social2:active {
+  transform: translateY(0);
+}
+
+/* Touch device improvements */
+@media (hover: none) and (pointer: coarse) {
+  .social2 {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+.social2.github:hover,
+.social2.github:focus { 
+  color: #333; 
+  border-color: #333; 
+}
+
+:root:not([data-theme="dark"]) .social2.github:hover,
+:root:not([data-theme="dark"]) .social2.github:focus { 
+  color: #000; 
+  border-color: #000; 
+}
+
+.social2.linkedin:hover,
+.social2.linkedin:focus { 
+  color: #0077b5; 
+  border-color: #0077b5; 
+}
+
+.social2.telegram:hover,
+.social2.telegram:focus { 
+  color: #0088cc; 
+  border-color: #0088cc; 
+}
+
+.social2.cv:hover,
+.social2.cv:focus { 
+  color: #e53e3e; 
+  border-color: #e53e3e; 
+}
+
+/* CV button specific */
 .cv-btn {
   appearance: none;
-  border: 0;
+  border: 1px solid var(--border);
   background: transparent;
   padding: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
-  color: var(--icon);
+  width: 44px;
+  height: 44px;
+  color: var(--text-secondary);
   cursor: pointer;
-  transition: transform 0.15s ease, color 0.15s ease, opacity 0.15s ease;
+  transition: all 0.2s;
+  border-radius: 10px;
 }
 
-@media (max-width: 480px) {
-  .cv-btn { width: 32px; height: 32px; }
+@media (hover: none) and (pointer: coarse) {
+  .cv-btn {
+    width: 48px;
+    height: 48px;
+  }
 }
 
-/* Το SVG να ακολουθεί το μέγεθος του κουμπιού και το currentColor, όπως τα άλλα icons */
 .cv-btn svg {
-  width: 100%;
-  height: 100%;
+  width: 20px;
+  height: 20px;
   display: block;
   fill: currentColor;
 }
 
-/* Hover/active συμπεριφορά όπως τα υπόλοιπα social */
-.social2:hover {
-  transform: translateY(-1px);
-  opacity: 0.9;
+.cv-btn:hover,
+.cv-btn:focus {
+  transform: translateY(-2px);
+  border-color: #e53e3e;
+  color: #e53e3e;
+  outline: none;
 }
 
-/* Brand-style hover για το CV (κόκκινο), όπως έχεις για GitHub/LinkedIn/Telegram */
-.social2.cv:hover { color: #e53e3e; }
+.cv-btn:active {
+  transform: translateY(0);
+}
 
-/* Default/hover χρώμα για το icon μέσω currentColor */
-.social2.cv { color: #e53e3e; } /* base κόκκινο */
-.social2.cv:hover { color: #c53030; cursor: pointer; } /* λίγο πιο σκούρο στο hover */
-.social2 svg { display: block; }
-
-/* Αν θες πιο μεγάλο/μικρό, άλλαξε αυτά */
-.social2.cv svg { width: 40px; height: 40px; }
-
-/* Modal (όπως το είχες) */
+/* CV Modal */
 .cv-modal[aria-hidden="true"] { display: none; }
 .cv-modal {
-  position: fixed; inset: 0; z-index: 1000;
-  display: grid; place-items: center;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
 }
-.cv-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,.5); }
+
+.cv-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+}
+
 .cv-dialog {
-  position: relative; width: min(95vw, 980px); height: min(90vh, 720px);
-  background: #0e0f11; color: #e6e6e6; border-radius: 12px;
-  box-shadow: 0 20px 60px rgba(0,0,0,.5); border: 1px solid #222;
-  display: flex; flex-direction: column; overflow: hidden;
-}
-.cv-header {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 12px 16px; background: #13151a; border-bottom: 1px solid #222;
-}
-.cv-close {
-  appearance: none; border: 0; background: transparent; color: #bbb;
-  font-size: 28px; line-height: 1; cursor: pointer; padding: 4px 8px; border-radius: 8px;
-}
-.cv-close:hover { color: #fff; background: #1e2129; }
-.cv-body { position: relative; flex: 1; display: grid; grid-template-rows: 1fr auto; }
-#cvFrame { width: 100%; height: 100%; border: 0; background: #0b0c0f; }
-.cv-fallback { padding: 8px 12px; font-size: 14px; color: #c9c9c9; background: #0b0c0f; border-top: 1px solid #222; }
-
-@media (max-width: 480px) {
-  .cv-dialog { width: 96vw; height: 88vh; }
-}
-
-/* Experience Section */
-.experience-item {
-  background: var(--card);
+  position: relative;
+  width: min(95vw, 980px);
+  height: min(90vh, 720px);
+  background: var(--bg-secondary);
+  border-radius: 16px;
+  box-shadow: var(--shadow-lg);
   border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Full screen modal on mobile */
+@media (max-width: 768px) {
+  .cv-dialog {
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0;
+    max-width: none;
+    max-height: none;
+  }
+  
+  .cv-header {
+    padding-top: max(20px, env(safe-area-inset-top));
+  }
+}
+
+.cv-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.cv-header h2 {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.cv-close {
+  width: 44px;
+  height: 44px;
   border-radius: 8px;
-  padding: 24px;
-  margin-bottom: 16px;
-  transition: all 0.3s ease;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 24px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.cv-close:hover,
+.cv-close:focus {
+  background: var(--hover);
+  color: var(--text);
+  outline: none;
+}
+
+.cv-close:active {
+  background: var(--border);
+}
+
+.cv-body {
+  flex: 1;
+  display: grid;
+  grid-template-rows: 1fr auto;
+}
+
+#cvFrame {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.cv-fallback {
+  padding: 16px 24px;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  border-top: 1px solid var(--border);
+  background: var(--hover);
+}
+
+.cv-fallback a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.cv-fallback a:hover {
+  text-decoration: underline;
+}
+
+/* ===============================================
+   About Section
+   =============================================== */
+
+.about-content {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 64px;
+  align-items: start;
+}
+
+.about-text p {
+  font-size: 1.0625rem;
+  color: var(--text-secondary);
+  margin-bottom: 24px;
+  line-height: 1.8;
+}
+
+.about-text p:last-child {
+  margin-bottom: 0;
+}
+
+.about-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+}
+
+@media (max-width: 768px) {
+  .about-content {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  
+  .about-image {
+    order: -1;
+  }
+  
+  .about-image img {
+    max-width: 280px;
+    margin: 0 auto;
+    display: block;
+  }
+}
+
+/* ===============================================
+   Education Section
+   =============================================== */
+
+.education-item {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 32px;
+  transition: all 0.3s;
+}
+
+.education-item:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.education-item h3 {
+  font-size: 1.375rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+
+.education-item .institution {
+  font-size: 1.0625rem;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.education-item .period {
+  font-size: 0.9375rem;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+/* ===============================================
+   Experience Section
+   =============================================== */
+
+.experience-item {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 32px;
+  margin-bottom: 20px;
+  transition: all 0.3s;
 }
 
 .experience-item:hover {
   border-color: var(--accent);
-  box-shadow: 0 8px 20px rgba(102, 224, 194, 0.1);
+  transform: translateY(-2px);
 }
 
-.experience-row {
+.experience-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   gap: 24px;
 }
 
-.experience-info h3 {
-  margin: 0 0 8px 0;
-  font-size: 18px;
+.experience-item h3 {
+  font-size: 1.375rem;
   font-weight: 600;
+  margin-bottom: 8px;
   color: var(--text);
 }
 
-.experience-company {
-  display: block;
+.experience-item .company {
+  font-size: 1.0625rem;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.experience-item .period {
+  font-size: 0.9375rem;
   color: var(--accent);
   font-weight: 500;
-  font-size: 15px;
-  margin-bottom: 8px;
-}
-
-.experience-period {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
   white-space: nowrap;
-}
-
-.duration {
-  color: var(--muted);
-  font-size: 14px;
-  font-weight: 500;
-  padding: 6px 12px;
-  background: rgba(102, 224, 194, 0.1);
-  border-radius: 4px;
-  border: 1px solid rgba(102, 224, 194, 0.2);
+  margin: 0;
 }
 
 @media (max-width: 640px) {
-  .experience-row {
+  .experience-header {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .experience-item .period {
+    white-space: normal;
+  }
+}
+
+/* ===============================================
+   Projects Section
+   =============================================== */
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 32px;
+}
+
+.project-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+
+.project-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent);
+  box-shadow: var(--shadow-md);
+}
+
+.project-image {
+  height: 220px;
+  background-size: cover;
+  background-position: center;
+  background-color: var(--hover);
+}
+
+.project-card[data-project="chordio"] .project-image {
+  background-image: url("assets/images/app_flow.png");
+}
+
+.project-card[data-project="moviesearch"] .project-image {
+  background-image: url("assets/images/moviesearchapp.png");
+}
+
+.project-card[data-project="pokemonexplorer"] .project-image {
+  background-image: url("assets/images/pokemonicon.png");
+}
+
+.project-content {
+  padding: 24px;
+}
+
+.project-content h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: var(--text);
+}
+
+.project-content p {
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+.project-links {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.project-link {
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  padding: 8px 12px;
+  border-radius: 6px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.project-link:hover,
+.project-link:focus {
+  color: var(--accent-secondary);
+  background: rgba(91, 158, 255, 0.1);
+  outline: none;
+}
+
+.project-link:active {
+  background: rgba(91, 158, 255, 0.15);
+}
+
+@media (max-width: 768px) {
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .project-links {
+    flex-direction: column;
+  }
+  
+  .project-link {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ===============================================
+   Contact Section
+   =============================================== */
+
+.contact-form {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.form-group {
+  margin-bottom: 24px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-secondary);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 1rem;
+  transition: all 0.2s;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* Prevent zoom on iOS when focusing inputs */
+@media (max-width: 768px) {
+  .form-group input,
+  .form-group textarea {
+    font-size: 16px;
+  }
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(91, 158, 255, 0.1);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 140px;
+}
+
+.visually-hidden {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* ===============================================
+   Footer
+   =============================================== */
+
+.site-footer {
+  border-top: 1px solid var(--border);
+  background: var(--bg-secondary);
+  padding: 60px 0 32px;
+  margin-top: var(--section-padding);
+  margin-left: 80px;
+  transition: margin-left 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .site-footer {
+    margin-left: 0;
+  }
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 64px;
+  margin-bottom: 48px;
+}
+
+.footer-info h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.footer-info p {
+  color: var(--text-secondary);
+  line-height: 1.7;
+  max-width: 480px;
+}
+
+.footer-links {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+
+.footer-nav h4,
+.footer-social h4 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 16px;
+  color: var(--text-secondary);
+}
+
+.footer-nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-nav a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  padding: 6px 0;
+  font-size: 0.9375rem;
+  transition: color 0.2s;
+}
+
+.footer-nav a:hover {
+  color: var(--accent);
+}
+
+.footer-social .socials2 {
+  margin-top: 0;
+}
+
+.footer-bottom {
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footer-bottom p {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+}
+
+.back-to-top {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  transition: all 0.2s;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.back-to-top:hover,
+.back-to-top:focus {
+  background: var(--hover);
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-2px);
+  outline: none;
+}
+
+.back-to-top:active {
+  transform: translateY(0);
+}
+
+.back-to-top svg {
+  width: 18px;
+  height: 18px;
+}
+
+@media (max-width: 768px) {
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  
+  .footer-links {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  
+  .footer-bottom {
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+  }
+}
+
+/* ===============================================
+   Utility Classes
+   =============================================== */
+
+.nowrap {
+  white-space: nowrap;
+}
+
+/* ===============================================
+   Responsive Adjustments
+   =============================================== */
+
+@media (max-width: 480px) {
+  :root {
+    --section-padding: 48px;
+    --container-padding: 20px;
+  }
+  
+  .hero {
+    min-height: 70vh;
+  }
+  
+  .section-title {
+    margin-bottom: 32px;
+  }
+  
+  .cta {
     flex-direction: column;
     align-items: flex-start;
   }
   
-  .experience-period {
-    align-items: flex-start;
+  .btn {
+    width: 100%;
+    max-width: 280px;
+    justify-content: center;
   }
   
-  .experience-item {
-    padding: 16px;
+  .socials2 {
+    justify-content: flex-start;
   }
 }
 
+/* ===============================================
+   Accessibility & Performance
+   =============================================== */
 
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
 
+/* Improve focus visibility for keyboard navigation */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Prevent text selection on interactive elements */
+button,
+.btn,
+.social2,
+.mobile-menu-toggle,
+.theme-toggle {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+/* Optimize images for mobile */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Prevent layout shift from images */
+img[width][height] {
+  height: auto;
+}
+
+/* Better scrollbar for webkit browsers on mobile */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+/* Mobile landscape orientation improvements */
+@media (max-width: 768px) and (orientation: landscape) {
+  .hero {
+    min-height: 100vh;
+    padding: 40px 0;
+  }
+  
+  .section {
+    padding: 40px 0;
+  }
+}
