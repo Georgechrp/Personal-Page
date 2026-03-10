@@ -1297,12 +1297,12 @@ main {
   
   .cta {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
   }
   
   .btn {
     width: 100%;
-    max-width: 280px;
+    max-width: none;
     justify-content: center;
   }
   
